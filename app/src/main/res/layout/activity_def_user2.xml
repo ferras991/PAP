@@ -1,9 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".PAP2.DefUser2">
 
-</android.support.constraint.ConstraintLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/def_user_2_show_def"
+            android:text="MOstrar Def"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onClick"/>
+
+        <Button
+            android:id="@+id/def_user_2_inserir"
+            android:layout_below="@+id/def_user_2_show_def"
+            android:text="Imagem e Nome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onClick"/>
+
+        <Button
+            android:id="@+id/def_user_2_inserir_soft"
+            android:layout_below="@+id/def_user_2_inserir"
+            android:text="Inserir Software"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onClick"/>
+
+        <Button
+            android:id="@+id/def_user_2_ver_soft"
+            android:layout_below="@+id/def_user_2_inserir_soft"
+            android:text="Ver meus uploads"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onClick"/>
+
+    </RelativeLayout>
+
+</LinearLayout>

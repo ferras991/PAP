@@ -181,8 +181,8 @@ public class SetupActivity extends AppCompatActivity {
 
             RequestOptions options = new RequestOptions()
                     .centerCrop()
-                    .placeholder(R.mipmap.logo_image)
-                    .error(R.mipmap.logo_image);
+                    .placeholder(R.drawable.logo_image)
+                    .error(R.drawable.logo_image);
 
             Glide.with(SetupActivity.this).setDefaultRequestOptions(options).load(Globais.user_img).into(setupImage);
         }

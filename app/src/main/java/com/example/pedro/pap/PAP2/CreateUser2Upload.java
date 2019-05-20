@@ -2,6 +2,7 @@ package com.example.pedro.pap.PAP2;
 
 public class CreateUser2Upload {
 
+    private String id;
     private String name;
     private String img;
 
@@ -9,10 +10,16 @@ public class CreateUser2Upload {
 
     }
 
-    public CreateUser2Upload(String name, String img) {
+    public CreateUser2Upload(String id, String name, String img) {
+        this.id = id;
         this.name = name;
         this.img = img;
     }
+
+
+    public String getId() { return id; }
+
+    public void setId(String id) {this.id = id; }
 
     public String getName() {
         return name;

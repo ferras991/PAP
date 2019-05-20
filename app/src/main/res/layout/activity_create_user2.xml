@@ -5,39 +5,204 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="#333333"
     tools:context=".PAP2.CreateUser2">
 
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_weight=".7">
+
+        <ProgressBar
+            android:id="@+id/create_user_2_progress"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:theme="@style/AppTheme.ProgressBar"/>
+
+        <ImageView
+            android:id="@+id/reg_imageView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/reg_progress"
+            app:srcCompat="@mipmap/logo" />
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight=".5"
+        android:gravity="center"
+        android:orientation="vertical">
 
         <EditText
-            android:hint="Email"
+            android:id="@+id/create_user_2_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:background="@drawable/txt_rounded_border_ok"
+            android:drawableStart="@drawable/ic_android_black_24dp"
+            android:drawableLeft="@drawable/ic_android_black_24dp"
+            android:drawablePadding="5dp"
+            android:ems="10"
+            android:hint="NOME..."
+            android:importantForAutofill="no"
+            android:inputType="textEmailAddress"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"
+            android:textColor="@android:color/white"
+            android:textColorHighlight="@android:color/white"
+            android:textColorHint="@android:color/white"
+            android:textColorLink="@android:color/darker_gray"
+            android:textCursorDrawable="@null"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="331dp" />
+
+        <EditText
             android:id="@+id/create_user_2_email"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="36dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:background="@drawable/txt_rounded_border_ok"
+            android:drawableStart="@drawable/ic_android_black_24dp"
+            android:drawableLeft="@drawable/ic_android_black_24dp"
+            android:drawablePadding="5dp"
+            android:ems="10"
+            android:hint="@string/reg_email_text"
+            android:importantForAutofill="no"
+            android:inputType="textEmailAddress"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"
+            android:textColor="@android:color/white"
+            android:textColorHighlight="@android:color/white"
+            android:textColorHint="@android:color/white"
+            android:textColorLink="@android:color/darker_gray"
+            android:textCursorDrawable="@null"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="331dp"
+            android:layout_below="@+id/create_user_2_name"/>
+
         <EditText
             android:id="@+id/create_user_2_senha"
-            android:layout_below="@+id/create_user_2_email"
-            android:hint="Senha"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPassword"/>
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="36dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:background="@drawable/txt_rounded_border_ok"
+            android:drawableStart="@drawable/ic_android_black_24dp"
+            android:drawableLeft="@drawable/ic_android_black_24dp"
+            android:drawablePadding="5dp"
+            android:ems="10"
+            android:gravity="center_vertical"
+            android:hint="@string/senha_text"
+            android:importantForAutofill="no"
+            android:inputType="textPassword"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"
+            android:textColor="@android:color/white"
+            android:textColorHighlight="@android:color/white"
+            android:textColorHint="@android:color/white"
+            android:textColorLink="@android:color/darker_gray"
+            android:textCursorDrawable="@null"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_below="@+id/create_user_2_email" />
+
+
         <EditText
             android:id="@+id/create_user_2_confirmar_senha"
-            android:layout_below="@+id/create_user_2_senha"
-            android:hint="Confirmar Senha"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPassword"/>
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="36dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:background="@drawable/txt_rounded_border_ok"
+            android:drawableStart="@drawable/ic_android_black_24dp"
+            android:drawableLeft="@drawable/ic_android_black_24dp"
+            android:drawablePadding="5dp"
+            android:ems="10"
+            android:gravity="center_vertical"
+            android:hint="@string/reg_confirm_text"
+            android:importantForAutofill="no"
+            android:inputType="textPassword"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"
+            android:textColor="@android:color/white"
+            android:textColorHighlight="@android:color/white"
+            android:textColorHint="@android:color/white"
+            android:textColorLink="@android:color/darker_gray"
+            android:textCursorDrawable="@null"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_below="@+id/create_user_2_senha"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight=".9">
+
+        <Button
+            android:text="+"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="InsertImage2"/>
 
         <Button
             android:id="@+id/create_user_2_btn"
-            android:text="Criar Utilizador"
-            android:layout_alignParentBottom="true"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/btn_rounded_border_enabled"
+            android:text="@string/login_reg_btn"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintCircleRadius="1dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_alignParentBottom="true"/>
 
     </RelativeLayout>
 

@@ -17,10 +17,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".PAP2.DefUser2"></activity>
+        <activity android:name=".PAP2.VerMeusUploads"></activity>
+        <activity android:name=".PAP2.InsertSoftware2" />
+        <activity android:name=".PAP2.ShowDef2" />
+        <activity android:name=".PAP2.InsertUserInfo2" />
+        <activity android:name=".PAP2.DefUser2" />
         <activity android:name=".PAP2.CreateUser2" />
         <activity android:name=".PAP2.LoginUser2" />
-        <activity android:name=".PAP2.SetupUser2" />
+        <activity android:name=".PAP2.InitialPage2" />
         <activity android:name=".PAP.LoginActivity" />
         <activity
             android:name=".PAP.DefinicoesActivity"
