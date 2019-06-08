@@ -17,42 +17,32 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".PAP2.VerMeusUploads"></activity>
-        <activity android:name=".PAP2.InsertSoftware2" />
-        <activity android:name=".PAP2.ShowDef2" />
-        <activity android:name=".PAP2.InsertUserInfo2" />
-        <activity android:name=".PAP2.DefUser2" />
-        <activity android:name=".PAP2.CreateUser2" />
-        <activity android:name=".PAP2.LoginUser2" />
-        <activity android:name=".PAP2.InitialPage2" />
-        <activity android:name=".PAP.LoginActivity" />
-        <activity
-            android:name=".PAP.DefinicoesActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".PAP2.MainPage2"
-            android:screenOrientation="portrait">
+
+        <activity android:name=".PAP2.MainPage2" android:theme="@style/AppTheme.NoActionBar" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
-        <activity
-            android:name=".PAP.MainActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".PAP.RegistarActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".PAP.SetupActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
-            android:theme="@style/Base.Theme.AppCompat" />
-        <activity
-            android:name=".PAP.InserirSoftware"
-            android:screenOrientation="portrait" />
+
+        <activity android:name=".PAP2.VerMeusUploads" android:screenOrientation="portrait" />
+        <activity android:name=".PAP2.InsertSoftware2" android:screenOrientation="portrait" />
+        <activity android:name=".PAP2.ShowDef2" android:screenOrientation="portrait" />
+        <activity android:name=".PAP2.InsertUserInfo2" android:screenOrientation="portrait" />
+        <activity android:name=".PAP2.DefUser2" android:screenOrientation="portrait" />
+        <activity android:name=".PAP2.CreateUser2" android:theme="@style/AppTheme.NoActionBar" android:screenOrientation="portrait" />
+        <activity android:name=".PAP2.LoginUser2"  android:theme="@style/AppTheme.NoActionBar" android:screenOrientation="portrait" />
+        <activity android:name=".PAP2.InitialPage2" android:screenOrientation="portrait" />
+
+        <activity android:name=".PAP.LoginActivity" android:screenOrientation="portrait" />
+        <activity android:name=".PAP.DefinicoesActivity" android:screenOrientation="portrait" />
+        <activity android:name=".PAP.MainActivity" android:screenOrientation="portrait" />
+        <activity android:name=".PAP.RegistarActivity" android:screenOrientation="portrait" />
+        <activity android:name=".PAP.SetupActivity" android:screenOrientation="portrait" />
+        <activity android:name=".PAP.InserirSoftware" android:screenOrientation="portrait" />
+
+        <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity" android:theme="@style/Base.Theme.AppCompat" />
     </application>
 
 </manifest>

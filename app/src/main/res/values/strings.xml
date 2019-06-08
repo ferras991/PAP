@@ -7,12 +7,13 @@
     <string name="action_logout_text">LOGOUT</string>
     <string name="login_reg_btn">REGISTAR</string>
     <string name="login_btn">LOGIN</string>
-    <string name="senha_text">SENHA...</string>
-    <string name="username_text">USERNAME...</string>
-    <string name="reg_confirm_text">CONFIRMAR SENHA...</string>
+    <string name="senha_text">SENHA</string>
+    <string name="username_text">USERNAME</string>
+    <string name="reg_confirm_text">CONFIRMAR SENHA</string>
     <string name="reg_login_btn">JÁ TEM CONTA</string>
-    <string name="setup_name_hint">NOME...</string>
+    <string name="setup_name_hint">NOME</string>
     <string name="setup_btn_name_text">GUARDAR</string>
-    <string name="reg_email_text">EMAIL...</string>
-    <string name="login_email_text">EMAIL...</string>
+    <string name="reg_email_text">EMAIL</string>
+    <string name="login_email_text">EMAIL</string>
+    <string name="action_search">SEARCH</string>
 </resources>

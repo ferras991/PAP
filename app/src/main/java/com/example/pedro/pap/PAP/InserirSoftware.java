@@ -88,22 +88,11 @@ public class InserirSoftware extends AppCompatActivity {
         buttonUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 extension = FilenameUtils.getExtension(textView.getText().toString());
-                Toast.makeText(InserirSoftware.this, "Extensão: " + extension, Toast.LENGTH_LONG).show();
-
-
-                Toast.makeText(InserirSoftware.this, filePath, Toast.LENGTH_LONG).show();
-
-
                 uploadFile();
-
-
-
             }
         });
         button = findViewById(R.id.button);
-
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,7 +104,6 @@ public class InserirSoftware extends AppCompatActivity {
                         .start();
             }
         });
-
     }
 
     @Override
@@ -127,7 +115,6 @@ public class InserirSoftware extends AppCompatActivity {
                 filePath = data.getStringExtra(FilePickerActivity.RESULT_FILE_PATH);
                 textView.setText(filePath);
                 extension = FilenameUtils.getExtension(textView.getText().toString());
-                Toast.makeText(InserirSoftware.this, "Extensão: " + extension, Toast.LENGTH_SHORT).show();
 
                 if (extension.equals("apk")){
                     imgUri = data.getData();
@@ -212,8 +199,6 @@ public class InserirSoftware extends AppCompatActivity {
                 @Override
                 public void onSuccess(Uri uri) {
                     caminho = uri.toString();
-
-                    Toast.makeText(InserirSoftware.this, caminho, Toast.LENGTH_LONG).show();
 
                     //APKUpload imageUpload = new APKUpload(fileName.getText().toString(), caminho);
 

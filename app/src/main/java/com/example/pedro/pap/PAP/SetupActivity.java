@@ -162,21 +162,10 @@ public class SetupActivity extends AppCompatActivity {
                 guardarInfo();
             }
         });
-
-
-//        Toast.makeText(this, "UserID: " + Globais.user_id, Toast.LENGTH_SHORT).show();
-//        Toast.makeText(this, "UserName: " + Globais.user_name, Toast.LENGTH_SHORT).show();
-//        Toast.makeText(this, "UserImg: " + Globais.user_img, Toast.LENGTH_SHORT).show();
-
     }
 
     private void getNameAndImage() {
-        //Toast.makeText(this, "User Id: " + Globais.user_id, Toast.LENGTH_SHORT).show();
-        //Toast.makeText(this, "User name: " + Globais.user_name, Toast.LENGTH_SHORT).show();
-        //Toast.makeText(this, "User Image: " + Globais.user_img, Toast.LENGTH_SHORT).show();
-
         if (Globais.user_name != "" && Globais.user_img != "") {
-            Toast.makeText(this, "Entrada 1", Toast.LENGTH_SHORT).show();
             setupName.setText(Globais.user_name);
 
             RequestOptions options = new RequestOptions()
@@ -187,7 +176,6 @@ public class SetupActivity extends AppCompatActivity {
             Glide.with(SetupActivity.this).setDefaultRequestOptions(options).load(Globais.user_img).into(setupImage);
         }
 
-
         if (!setupName.getText().toString().isEmpty()) {
             exist = true;
 
@@ -197,14 +185,11 @@ public class SetupActivity extends AppCompatActivity {
             //setupName.setBackgroundResource(R.drawable.txt_rounded_border_error);
         }
 
-
         setupBtn.setEnabled(true);
         setupProgress.setVisibility(View.INVISIBLE);
 
         setupName.setSelection(setupName.getText().length());
-
     }
-
 
     private void storeFireStore(final String user_name, StorageReference image_path) {
         if(image_path != null){
@@ -237,7 +222,6 @@ public class SetupActivity extends AppCompatActivity {
                             setupProgress.setVisibility(View.INVISIBLE);
                         }
                     });
-
                 }
             });
         }else{
@@ -251,7 +235,6 @@ public class SetupActivity extends AppCompatActivity {
                     final Map<String, String> userMap = new HashMap<>();
                     userMap.put("name", user_name);
                     userMap.put("image", caminho2);
-
 
                     firebaseFirestore.collection("Users").document(Globais.user_id).set(userMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
@@ -272,22 +255,10 @@ public class SetupActivity extends AppCompatActivity {
 
                             setupProgress.setVisibility(View.INVISIBLE);
                         }
-
                     });
-
-                    //Toast.makeText(SetupActivity.this, caminho2.toString(), Toast.LENGTH_LONG).show();
                 }
             });
-
-
-            //Toast.makeText(SetupActivity.this, "É null", Toast.LENGTH_LONG).show();
-
-
         }
-
-
-
-
     }
 
     @Override
@@ -295,16 +266,11 @@ public class SetupActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
-            //Toast.makeText(this, "Entra 1 image", Toast.LENGTH_SHORT).show();
-
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
+
             if (resultCode == RESULT_OK) {
-                //Toast.makeText(this, "Entra 2 image", Toast.LENGTH_SHORT).show();
-
                 mainImageURI = result.getUri();
-
                 setupImage.setImageURI(mainImageURI);
-
                 isChange = true;
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 Exception error = result.getError();
@@ -314,7 +280,6 @@ public class SetupActivity extends AppCompatActivity {
             Toast.makeText(this, "Não deu", Toast.LENGTH_SHORT).show();
         }
     }
-
 
     private void BringImagePicker(){
         CropImage.activity()
@@ -330,12 +295,8 @@ public class SetupActivity extends AppCompatActivity {
         setupBtn.setEnabled(false);
 
         if(!TextUtils.isEmpty(user_name) && mainImageURI != null) {
-            //Toast.makeText(this, "Entrou 1", Toast.LENGTH_SHORT).show();
 
-            if(isChange) {
-                //Toast.makeText(this, "Entrou 2", Toast.LENGTH_SHORT).show();
-
-                //Toast.makeText(this, "UserName: " + user_name, Toast.LENGTH_SHORT).show();
+            if (isChange) {
                 final StorageReference image_path = storageReference.child("profile_images").child(user_name + ".jpg");
 
                 image_path.putFile(mainImageURI).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
@@ -351,7 +312,7 @@ public class SetupActivity extends AppCompatActivity {
                         }
                     }
                 });
-            }else {
+            } else {
                 Toast.makeText(this, "Entrou 3", Toast.LENGTH_SHORT).show();
                 storeFireStore(user_name, null);
 
@@ -359,27 +320,19 @@ public class SetupActivity extends AppCompatActivity {
 //                setupBtn.setEnabled(true);
 
             }
-        }else if (exist == false) {
+        } else if (exist == false) {
             if(setupName.getText().toString().isEmpty()) {
                 setupName.setBackgroundResource(R.drawable.txt_rounded_border_error);
 
                 setupProgress.setVisibility(View.INVISIBLE);
                 setupBtn.setEnabled(true);
-
-                //Toast.makeText(this, "Entrou 6", Toast.LENGTH_SHORT).show();
             }else {
                 Toast.makeText(this, "Tem de inserir uma imagem", Toast.LENGTH_SHORT).show();
                 setupProgress.setVisibility(View.INVISIBLE);
                 setupBtn.setEnabled(true);
-
-                //Toast.makeText(this, "Entrou 7", Toast.LENGTH_SHORT).show();
             }
-        }
-
-        else if (!Globais.user_name.equals(setupName.getText().toString())){
+        } else if (!Globais.user_name.equals(setupName.getText().toString())){
             storeFireStore(user_name, null);
-
-            //Toast.makeText(SetupActivity.this, "Entrou 4", Toast.LENGTH_SHORT).show();
 
 //            setupProgress.setVisibility(View.INVISIBLE);
 //            setupBtn.setEnabled(true);
@@ -388,10 +341,7 @@ public class SetupActivity extends AppCompatActivity {
 
 //            setupProgress.setVisibility(View.INVISIBLE);
 //            setupBtn.setEnabled(true);
-
-           // Toast.makeText(this, "Entrou 5", Toast.LENGTH_SHORT).show();
-        }else{
-            //Toast.makeText(SetupActivity.this, "Entrou8", Toast.LENGTH_SHORT).show();
+        } else{
             setupProgress.setVisibility(View.INVISIBLE);
             setupBtn.setEnabled(true);
 

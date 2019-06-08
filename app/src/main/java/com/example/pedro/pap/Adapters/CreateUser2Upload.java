@@ -1,4 +1,4 @@
-package com.example.pedro.pap.PAP2;
+package com.example.pedro.pap.Adapters;
 
 public class CreateUser2Upload {
 
@@ -15,7 +15,6 @@ public class CreateUser2Upload {
         this.name = name;
         this.img = img;
     }
-
 
     public String getId() { return id; }
 

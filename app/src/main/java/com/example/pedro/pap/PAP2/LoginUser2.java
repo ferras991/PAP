@@ -12,7 +12,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.example.pedro.pap.PAP.Globais;
+import com.example.pedro.pap.Adapters.CreateUser2Upload;
 import com.example.pedro.pap.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -25,7 +25,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class LoginUser2 extends AppCompatActivity {
-
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabaseRef;
 
@@ -68,7 +67,6 @@ public class LoginUser2 extends AppCompatActivity {
                                         String errorMessage = task.getException().getMessage();
                                         Toast.makeText(LoginUser2.this,"Error: " + errorMessage, Toast.LENGTH_LONG).show();
                                     }
-
 //                                    loginProgress.setVisibility(View.INVISIBLE);
                                 }
                             });
@@ -87,34 +85,16 @@ public class LoginUser2 extends AppCompatActivity {
 //                CreateUser2Upload newUser = dataSnapshot.getValue(CreateUser2Upload.class);
 
                 try {
-
                     CreateUser2Upload newUser = dataSnapshot.getValue(CreateUser2Upload.class);
 
-//                    Toast.makeText(LoginUser2.this, "UserID: " + userID, Toast.LENGTH_SHORT).show();
-//                    Toast.makeText(LoginUser2.this, "UserID: " + newUser.getId(), Toast.LENGTH_SHORT).show();
-//                    Toast.makeText(LoginUser2.this, "UserName: " + newUser.getName(), Toast.LENGTH_SHORT).show();
-//                    Toast.makeText(LoginUser2.this, "UserImage: " + newUser.getImg(), Toast.LENGTH_SHORT).show();
-
-                    if(userID.equals(newUser.getId())) {
-//                        Toast.makeText(LoginUser2.this, "Entrou", Toast.LENGTH_SHORT).show();
-//                        Toast.makeText(LoginUser2.this, "Id: " + newUser.getId(), Toast.LENGTH_SHORT).show();
-//                        Toast.makeText(LoginUser2.this, "Name: " + newUser.getName(), Toast.LENGTH_SHORT).show();
-//                        Toast.makeText(LoginUser2.this, "Img: " + newUser.getImg(), Toast.LENGTH_SHORT).show();
-
+                    if (userID.equals(newUser.getId())) {
                         Globais2.user_id = userID;
                         Globais2.user_name = newUser.getName();
                         Globais2.user_img = newUser.getImg();
                     }
-//
-//                    Toast.makeText(LoginUser2.this, "Saiu", Toast.LENGTH_SHORT).show();
-//                    Toast.makeText(LoginUser2.this, "UserID: " + Globais2.user_id, Toast.LENGTH_SHORT).show();
-//                    Toast.makeText(LoginUser2.this, "UserName: " + Globais2.user_name, Toast.LENGTH_SHORT).show();
-//                    Toast.makeText(LoginUser2.this, "UserImage: " + Globais2.user_img, Toast.LENGTH_SHORT).show();
-
                 }catch (Exception e) {
                     Toast.makeText(LoginUser2.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
-
             }
 
             @Override
@@ -144,15 +124,12 @@ public class LoginUser2 extends AppCompatActivity {
             System.out.println("Main thread Interrupted");
         }
 
-
-
         progressBar.setVisibility(View.INVISIBLE);
 
         System.out.println("Main thread exiting.");
         Intent intent = new Intent(this, InitialPage2.class);
         startActivity(intent);
         finish();
-
     }
 
 }

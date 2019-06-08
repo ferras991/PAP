@@ -18,17 +18,14 @@ public class DefUser2 extends AppCompatActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.def_user_2_inserir:
-//                Toast.makeText(this, "Inserir Clicked", Toast.LENGTH_SHORT).show();
                 goToInsert();
                 break;
 
             case R.id.def_user_2_show_def:
-//                Toast.makeText(this, "Show DEf Clicked", Toast.LENGTH_SHORT).show();
                 goToShowDef();
                 break;
 
             case R.id.def_user_2_inserir_soft:
-//                Toast.makeText(this, "Show DEf Clicked", Toast.LENGTH_SHORT).show();
                 goToInsertSoft();
                 break;
 
@@ -36,7 +33,6 @@ public class DefUser2 extends AppCompatActivity {
                 goToMeusUploads();
                 break;
         }
-
     }
 
     private void goToMeusUploads() {

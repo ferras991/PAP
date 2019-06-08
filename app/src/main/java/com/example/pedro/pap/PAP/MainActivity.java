@@ -111,10 +111,6 @@ public class MainActivity extends AppCompatActivity {
                 progressDialog.dismiss();
             }
         });
-
-        Toast.makeText(this, "UserID: " + Globais.user_id, Toast.LENGTH_SHORT).show();
-        Toast.makeText(this, "UserName: " + Globais.user_name, Toast.LENGTH_SHORT).show();
-        Toast.makeText(this, "UserImg: " + Globais.user_img, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -150,10 +146,10 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(i);
                 break;
 
-            case R.id.action_download:
-                Intent i1 = new Intent(MainActivity.this, InserirSoftware.class);
-                startActivity(i1);
-                break;
+//            case R.id.action_download:
+//                Intent i1 = new Intent(MainActivity.this, InserirSoftware.class);
+//                startActivity(i1);
+//                break;
 
             default:
                 return false;

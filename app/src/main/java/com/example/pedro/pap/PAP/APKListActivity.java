@@ -74,16 +74,10 @@ public class APKListActivity extends AppCompatActivity{
 
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     APKUpload img = snapshot.getValue(APKUpload.class);
-
                     imgList.add(img);
-
-                    //Toast.makeText(ImageListActivity.this, "Nome: " + snapshot.child("name").getValue().toString() + "\nUrl: " + snapshot.child("url").getValue().toString(), Toast.LENGTH_SHORT).show();
                 }
 
-
                 adapter = new APKListAdapter(APKListActivity.this, R.layout.apk_item, imgList);
-
-
 
                 lv.setAdapter(adapter);
 
@@ -107,25 +101,14 @@ public class APKListActivity extends AppCompatActivity{
         tvImageName = findViewById(R.id.tvAPKName);
         btnDownload = findViewById(R.id.btn_download);
 
-
-
-        //get the row the clicked button is in
         LinearLayout vwParentRow = (LinearLayout)v.getParent();
-
         TextView child = (TextView)vwParentRow.getChildAt(0);
-        //Button btnChild = (Button)vwParentRow.getChildAt(1);
-
         StorageReference riversRef = storageReference.child("apk/" + child.getText().toString() + ".apk");
-        //Toast.makeText(ImageListActivity.this, riversRef.toString(), Toast.LENGTH_LONG).show();
-
 
         File rootPath = new File(Environment.getExternalStorageDirectory(), "Download");
         final File myFile = new File(rootPath,  tvImageName.getText().toString()+ ".apk");
 
-
-        //Toast.makeText(ImageListActivity.this, rootPath.toString(), Toast.LENGTH_SHORT).show();
         final ProgressDialog progressDialog = new ProgressDialog(APKListActivity.this);
-
 
         try{
 

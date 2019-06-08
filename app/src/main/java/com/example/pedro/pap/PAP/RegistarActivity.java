@@ -65,7 +65,6 @@ public class RegistarActivity extends AppCompatActivity {
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if(task.isSuccessful()){
                                     Globais.user_id = mAuth.getUid();
-                                    //Toast.makeText(RegistarActivity.this, "User Id: " + Globais.user_id, Toast.LENGTH_SHORT).show();
 
                                     Intent setupToolbar = new Intent(RegistarActivity.this,SetupActivity.class);
                                     startActivity(setupToolbar);

@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#333333"
+    style="@style/AppTheme.NoActionBar"
     tools:context=".PAP2.LoginUser2">
 
     <RelativeLayout

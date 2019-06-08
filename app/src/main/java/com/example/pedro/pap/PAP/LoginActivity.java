@@ -155,7 +155,6 @@ public class LoginActivity extends AppCompatActivity {
                             Globais.user_id = id;
                             Globais.user_name = name;
                             Globais.user_img = image;
-//                            Toast.makeText(LoginActivity.this, "User Name: " + name, Toast.LENGTH_SHORT).show();
                         }
                     } else {
                         String error = task.getException().getMessage();

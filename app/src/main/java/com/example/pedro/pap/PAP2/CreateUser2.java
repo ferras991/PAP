@@ -5,19 +5,16 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.Environment;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.example.pedro.pap.Adapters.CreateUser2Upload;
 import com.example.pedro.pap.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -30,8 +27,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.theartofdev.edmodo.cropper.CropImage;
-import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -50,8 +45,6 @@ public class CreateUser2 extends AppCompatActivity {
     private ProgressBar progressBar;
 
     Context mContext = this;
-
-
 
     private String defaultImagePath;
 
@@ -115,20 +108,13 @@ public class CreateUser2 extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful()) {
-                                        Toast.makeText(CreateUser2.this, "User Id: " + mAuth.getUid(), Toast.LENGTH_SHORT).show();
-
                                         Globais2.user_id = mAuth.getUid();
-                                        Toast.makeText(CreateUser2.this, "UserID: " + Globais2.user_id, Toast.LENGTH_SHORT).show();
-
-//                                    Intent intent = new Intent(CreateUser2.this, InitialPage2.class);
-//                                    startActivity(intent);
 
                                         try {
                                             Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.logo_image);
-                                            File f = new File(getExternalCacheDir() + "/image.png");
+                                            File f = new File(getExternalCacheDir() + "/defaultUserImage.png");
 
                                             defaultImagePath = f.getPath();
-                                            Toast.makeText(mContext, "Path: " + defaultImagePath, Toast.LENGTH_SHORT).show();
                                             try {
                                                 FileOutputStream outStream = new FileOutputStream(f);
                                                 bm.compress(Bitmap.CompressFormat.PNG, 100, outStream);
@@ -138,7 +124,6 @@ public class CreateUser2 extends AppCompatActivity {
                                                 throw new RuntimeException(e);
                                             }
 
-
                                         }catch (Exception e1) {
                                             Toast.makeText(mContext, e1.getMessage(), Toast.LENGTH_SHORT).show();
                                         }
@@ -147,7 +132,10 @@ public class CreateUser2 extends AppCompatActivity {
 
                                         progressBar.setVisibility(View.INVISIBLE);
 
-                                        //finish();
+                                        Intent intent = new Intent(CreateUser2.this, InitialPage2.class);
+                                        startActivity(intent);
+
+                                        finish();
                                     } else {
                                         String errorMessage = task.getException().getMessage();
                                         Toast.makeText(getApplicationContext(), "Error: " + errorMessage, Toast.LENGTH_LONG).show();
@@ -159,21 +147,14 @@ public class CreateUser2 extends AppCompatActivity {
                     }
                 }
             }
-
         }
         if (email.isEmpty() || pass.isEmpty() || passCheck.isEmpty()) {
 
         }
-
-
-
     }
 
     private void keepChanges(final String name, String image) {
-        Toast.makeText(this, "Entra1", Toast.LENGTH_SHORT).show();
-
         try{
-
             final StorageReference ref = mStorageRef.child("usersImages/" + Globais2.user_id + ".jpg");
             UploadTask uploadTask;
 
@@ -184,9 +165,7 @@ public class CreateUser2 extends AppCompatActivity {
             uploadTask.addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                    Toast.makeText(CreateUser2.this, "Entra 3", Toast.LENGTH_SHORT).show();
                     if (task.isSuccessful()) {
-                        Toast.makeText(CreateUser2.this, "Entra2", Toast.LENGTH_SHORT).show();
                         ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                             @Override
                             public void onSuccess(Uri uri) {
@@ -199,19 +178,15 @@ public class CreateUser2 extends AppCompatActivity {
 
                                 mDatabaseRef.child(Globais2.user_id).setValue(softUpload);
 
-                                Toast.makeText(getApplicationContext(), "APK uploaded", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(), "Utilizador Criado", Toast.LENGTH_LONG).show();
 
-                                finish();
+                                //finish();
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-
                                 Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
-
-
                             }
-
                         });
                     }else {
                         Toast.makeText(CreateUser2.this, "NANA", Toast.LENGTH_SHORT).show();
@@ -222,40 +197,5 @@ public class CreateUser2 extends AppCompatActivity {
         }catch (Exception e1) {
             Toast.makeText(this, e1.getMessage(), Toast.LENGTH_SHORT).show();
         }
-
-
-
     }
-
-
-
-
-
-
-
-    public void InsertImage2(View view) {
-        try {
-
-
-            Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.logo_image);
-            File f = new File(getExternalCacheDir() + "/image.png");
-
-            defaultImagePath = f.getPath();
-            Toast.makeText(mContext, "Path: " + defaultImagePath, Toast.LENGTH_SHORT).show();
-            try {
-                FileOutputStream outStream = new FileOutputStream(f);
-                bm.compress(Bitmap.CompressFormat.PNG, 100, outStream);
-                outStream.flush();
-                outStream.close();
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-
-
-        }catch (Exception e1) {
-            Toast.makeText(mContext, e1.getMessage(), Toast.LENGTH_SHORT).show();
-        }
-    }
-
-
 }

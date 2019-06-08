@@ -181,12 +181,6 @@
         android:layout_weight=".9">
 
         <Button
-            android:text="+"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="InsertImage2"/>
-
-        <Button
             android:id="@+id/create_user_2_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

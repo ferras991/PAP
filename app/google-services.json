@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "522052371483-bu7mqpt0t0lvrh2u8ue352m4d2k8bd86.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.pedro.pap",
+            "certificate_hash": "efa30be74059a156c1341c19bceb1ac64b5645f7"
+          }
+        },
+        {
           "client_id": "522052371483-vvchbvgcnv0n1kj3co5uuri5umnkqi22.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -33,20 +41,13 @@
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 1
-        },
         "appinvite_service": {
-          "status": 2,
           "other_platform_oauth_client": [
             {
               "client_id": "522052371483-bpclq3ute4pjbni5rabmheelkq01th78.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
-        },
-        "ads_service": {
-          "status": 2
         }
       }
     }
