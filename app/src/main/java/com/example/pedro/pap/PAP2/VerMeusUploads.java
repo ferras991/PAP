@@ -41,7 +41,7 @@ import java.io.File;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 
-public class InitialPage2 extends AppCompatActivity {
+public class VerMeusUploads extends AppCompatActivity {
     private DatabaseReference ref;
     private StorageReference mStorageRef;
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
@@ -54,26 +54,23 @@ public class InitialPage2 extends AppCompatActivity {
     private Button btnDownload;
     private TextView tvImageName;
 
-    private Menu menu;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_initial_page_2);
+        setContentView(R.layout.activity_ver_meus_uploads);
 
         ref = FirebaseDatabase.getInstance().getReference().child("apk");
         mStorageRef = FirebaseStorage.getInstance().getReference();
 
-        recyclerView = findViewById(R.id.rv);
-        progressBar = findViewById(R.id.initial_page_2_progress_bar);
+        recyclerView = findViewById(R.id.ver_meus_uploads_rv);
+        progressBar = findViewById(R.id.ver_meus_uploads_2_progress_bar);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        this.menu = menu;
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.meus_uploads_menu, menu);
 
-        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
+        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.meus_uploads_search));
         searchView.setQueryHint("Pesquisar...");
         searchView.setMaxWidth(Integer.MAX_VALUE);
 
@@ -97,56 +94,14 @@ public class InitialPage2 extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()){
-            case R.id.action_logout_btn:
-                Globais2.user_id = "";
-                Globais2.user_name = "";
-                Globais2.user_img = "";
-                logOut();
-                break;
-
-            case R.id.action_settings_btn:
-                goToDef();
-                break;
-
-            case R.id.action_search:
-                hideOption(R.id.action_logout_btn, menu);
-                hideOption(R.id.action_settings_btn, menu);
+            case R.id.meus_uploads_search:
+//                return true;
                 break;
 
             default:
                 return false;
         }
-//        showOption(R.id.action_logout_btn, menu);
-//        showOption(R.id.action_settings_btn, menu);
         return true;
-    }
-
-    private void hideOption(int id, Menu menu)
-    {
-        MenuItem item = menu.findItem(id);
-        item.setVisible(false);
-    }
-
-    private void showOption(int id, Menu menu)
-    {
-        MenuItem item = menu.findItem(id);
-        item.setVisible(true);
-    }
-
-    private void logOut() {
-        mAuth.signOut();
-        sendToLogin();
-    }
-
-    private void sendToLogin() {
-        Intent loginIntent = new Intent(InitialPage2.this, MainPage2.class);
-        startActivity(loginIntent);
-        finish();
-    }
-
-    public void goToDef() {
-        Intent intent = new Intent(InitialPage2.this, DefUser2.class);
-        startActivity(intent);
     }
 
     @Override
@@ -167,23 +122,22 @@ public class InitialPage2 extends AppCompatActivity {
                                 list.add(ds.getValue(SoftUpload.class));
                             }
 
-                            SoftwareAdapter adapterClass = new SoftwareAdapter(InitialPage2.this, list);
+                            SoftwareAdapter adapterClass = new SoftwareAdapter(VerMeusUploads.this, list);
                             recyclerView.setAdapter(adapterClass);
                         }
 
                         progressBar.setVisibility(View.INVISIBLE);
                     }catch (Exception e) {
-                        Toast.makeText(InitialPage2.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(VerMeusUploads.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
-                    Toast.makeText(InitialPage2.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(VerMeusUploads.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
                     progressBar.setVisibility(View.INVISIBLE);
                 }
             });
-
         }else{
             Toast.makeText(this, "Não existe", Toast.LENGTH_SHORT).show();
             progressBar.setVisibility(View.VISIBLE);
@@ -199,7 +153,7 @@ public class InitialPage2 extends AppCompatActivity {
             }
         }
 
-        SoftwareAdapter adapterClass = new SoftwareAdapter(InitialPage2.this, myList);
+        SoftwareAdapter adapterClass = new SoftwareAdapter(VerMeusUploads.this, myList);
         recyclerView.setAdapter(adapterClass);
     }
 
@@ -216,7 +170,7 @@ public class InitialPage2 extends AppCompatActivity {
             File rootPath = new File(Environment.getExternalStorageDirectory(), "SOFTVIRTUAL");
             final File myFile = new File(rootPath,  tvImageName.getText().toString()+ ".apk");
 
-            final ProgressDialog progressDialog = new ProgressDialog(InitialPage2.this);
+            final ProgressDialog progressDialog = new ProgressDialog(VerMeusUploads.this);
 
             try{
                 if (!rootPath.exists()) {
@@ -240,20 +194,20 @@ public class InitialPage2 extends AppCompatActivity {
                     @Override
                     public void onFailure(@NonNull Exception exception) {
                         progressDialog.dismiss();
-                        Toast.makeText(InitialPage2.this, "Error", Toast.LENGTH_LONG).show();
+                        Toast.makeText(VerMeusUploads.this, "Error", Toast.LENGTH_LONG).show();
                     }
                 }).addOnProgressListener(new OnProgressListener<FileDownloadTask.TaskSnapshot>() {
                     @Override
                     public void onProgress(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                       double progress = (100.0 * taskSnapshot.getBytesTransferred())/taskSnapshot.getTotalByteCount();
+                        double progress = (100.0 * taskSnapshot.getBytesTransferred())/taskSnapshot.getTotalByteCount();
                         progressDialog.setMessage(((int)progress) + "% Downloaded...");
                     }
                 });
             }catch (Exception e1){
-                Toast.makeText(InitialPage2.this, e1.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(VerMeusUploads.this, e1.getMessage(), Toast.LENGTH_LONG).show();
             }
         } catch (Exception e1) {
-            Toast.makeText(InitialPage2.this, e1.getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(VerMeusUploads.this, e1.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -276,7 +230,8 @@ public class InitialPage2 extends AppCompatActivity {
 
             Thread.sleep(10000);
         }catch (Exception e1){
-            Toast.makeText(InitialPage2.this, e1.getMessage(), Toast.LENGTH_LONG).show();
+            Toast.makeText(VerMeusUploads.this, e1.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
+
 }

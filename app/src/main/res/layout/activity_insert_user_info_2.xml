@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_gravity="center"
+    tools:context=".PAP2.InsertUserInfo2">
+
+    <RelativeLayout
+        android:layout_weight=".5"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center">
+
+        <EditText
+            android:id="@+id/insert_user_2_editText"
+            android:hint="Name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:id="@+id/insert_user_2_imageView"
+            android:layout_below="@+id/insert_user_2_editText"
+            android:background="@drawable/logo_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:onClick="InsertImage"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_weight=".5"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/insert_user_2_btn"
+            android:layout_alignParentBottom="true"
+            android:text="Inserir"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="InsertUserInfo"
+            android:background="@drawable/btn_rounded_border_enabled"
+            android:textColor="@android:color/white"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="12dp"/>
+
+    </RelativeLayout>
+
+</LinearLayout>
