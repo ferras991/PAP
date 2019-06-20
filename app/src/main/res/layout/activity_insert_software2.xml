@@ -9,27 +9,29 @@
     android:background="#333333">
 
     <RelativeLayout
+        android:layout_weight=".5"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <Button
-            android:id="@+id/insert_software_2_browseAPK"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Choose file"
-            android:background="@drawable/btn_rounded_border_enabled"
-            android:textColor="@android:color/white"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="12dp"
-            android:layout_marginTop="16dp"/>
-
         <EditText
             android:id="@+id/insert_software_2_soft_name"
-            android:layout_below="@+id/insert_software_2_browseAPK"
-            android:hint="Software name"
+            android:background="@drawable/txt_rounded_border_ok"
+            android:drawableStart="@drawable/ic_android_black_24dp"
+            android:drawableLeft="@drawable/ic_android_black_24dp"
+            android:drawablePadding="5dp"
+            android:ems="10"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:hint="NOME DO PROJETO..."
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:textColorHint="@android:color/white"/>
 
         <TextView
             android:id="@+id/insert_software_2_soft_path"
@@ -42,11 +44,35 @@
             android:id="@+id/insert_software_2_soft_image"
             android:layout_below="@+id/insert_software_2_soft_name"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:src="@drawable/default_thumb"/>
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1.5"
+        android:orientation="vertical"
+        >
+
+        <Button
+            android:id="@+id/insert_software_2_browseAPK"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/insert_software_2_soft_btn"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/btn_rounded_border_enabled"
+            android:text="Choose file"
+            android:textColor="@android:color/white" />
+
 
         <Button
             android:id="@+id/insert_software_2_soft_btn"
-            android:layout_alignParentBottom="true"
             android:text="Inserir"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -54,8 +80,9 @@
             android:textColor="@android:color/white"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="12dp"/>
-
+            android:layout_marginBottom="12dp"
+            android:layout_alignParentBottom="true"
+            />
     </RelativeLayout>
 
 

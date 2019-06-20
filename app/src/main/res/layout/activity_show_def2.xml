@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="#333333"
     tools:context=".PAP2.ShowDef2">
 
     <RelativeLayout
@@ -13,15 +14,29 @@
 
         <TextView
             android:id="@+id/show_def_2_email_text"
-            android:text="Email: "
+            android:text="EMAIL: "
             android:textSize="30sp"
+            android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"/>
         <EditText
             android:id="@+id/email_edit_show_def"
-            android:hint="Email:"
+            android:hint="EMAIL"
             android:enabled="false"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:background="@drawable/txt_rounded_border_ok"
+            android:drawableStart="@drawable/ic_android_black_24dp"
+            android:drawableLeft="@drawable/ic_android_black_24dp"
+            android:drawablePadding="5dp"
+            android:ems="10"
             android:inputType="textEmailAddress"
+            android:textColorHint="@android:color/white"
+            android:textColor="@android:color/white"
             android:layout_toRightOf="@+id/show_def_2_email_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
@@ -31,24 +46,38 @@
             android:id="@+id/show_def_2_user_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Name: "
+            android:text="NOME: "
+            android:layout_marginTop="30dp"
+            android:textColor="@android:color/white"
             android:textSize="30sp" />
         <EditText
             android:id="@+id/name_edit_show_def"
-            android:hint="Nome:"
+            android:hint="NOME"
             android:enabled="false"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:background="@drawable/txt_rounded_border_ok"
+            android:drawableStart="@drawable/ic_android_black_24dp"
+            android:drawableLeft="@drawable/ic_android_black_24dp"
+            android:drawablePadding="5dp"
+            android:ems="10"
             android:inputType="textPersonName"
+            android:layout_marginTop="30dp"
             android:layout_below="@+id/email_edit_show_def"
             android:layout_toRightOf="@+id/show_def_2_email_text"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:textColorHint="@android:color/white"/>
 
         <ImageView
             android:id="@+id/show_def_2_user_image_show"
             android:layout_below="@+id/show_def_2_user_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingTop="15dp" />
+            android:paddingTop="10dp" />
 
         <Button
             android:id="@+id/show_def_btn_save_changes"
@@ -56,7 +85,13 @@
             android:layout_height="wrap_content"
             android:text="EDITAR INFORMAÇÕES"
             android:layout_alignParentBottom="true"
-            android:onClick="editAndSaveInfo"/>
+            android:onClick="editAndSaveInfo"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/btn_rounded_border_enabled"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"/>
     </RelativeLayout>
 
 </LinearLayout>

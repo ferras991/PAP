@@ -38,9 +38,6 @@ public class DefUser2 extends AppCompatActivity {
 
     public void onClick(View view) {
         switch (view.getId()) {
-//            case R.id.def_user_2_inserir:
-//                goToInsertUser();
-//                break;
 
             case R.id.def_user_2_show_def:
                 goToShowDef();
@@ -58,10 +55,19 @@ public class DefUser2 extends AppCompatActivity {
                 gotoShare();
                 break;
 
+            case R.id.def_user_2_change_pass:
+                goToChangePass();
+                break;
+
             case R.id.def_user_2_delete_user:
                 goToDeleteUser();
                 break;
         }
+    }
+
+    private void goToChangePass() {
+        Intent i = new Intent(DefUser2.this, Change_Pass.class);
+        startActivity(i);
     }
 
     private void goToDeleteUser() {
@@ -109,11 +115,6 @@ public class DefUser2 extends AppCompatActivity {
 
     private void goToInsertSoft() {
         Intent intent = new Intent(DefUser2.this, InsertSoftware2.class);
-        startActivity(intent);
-    }
-
-    public void goToInsertUser() {
-        Intent intent = new Intent(DefUser2.this, InsertUserInfo2.class);
         startActivity(intent);
     }
 

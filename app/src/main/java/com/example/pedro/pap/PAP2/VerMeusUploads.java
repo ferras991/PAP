@@ -1,12 +1,7 @@
 package com.example.pedro.pap.PAP2;
 
-import android.app.ProgressDialog;
-import android.content.Intent;
-import android.net.Uri;
-import android.os.Build;
-import android.os.Environment;
-import android.os.StrictMode;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -21,12 +16,14 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.pedro.pap.Adapters.CreateUser2Upload;
 import com.example.pedro.pap.Adapters.SoftUpload;
 import com.example.pedro.pap.Adapters.SoftwareAdapter;
 import com.example.pedro.pap.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -42,16 +39,18 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 
 public class VerMeusUploads extends AppCompatActivity {
+
+    private DatabaseReference mDatabaseRef = FirebaseDatabase.getInstance().getReference("apk");
     private DatabaseReference ref;
     private StorageReference mStorageRef;
-    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
+
     private String firebaseID;
+    private String apkId;
 
     ArrayList<SoftUpload> list;
 
     RecyclerView recyclerView;
     private ProgressBar progressBar;
-
     private Button btnDownload;
     private TextView tvImageName;
 
@@ -59,7 +58,7 @@ public class VerMeusUploads extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ver_meus_uploads);
-        getSupportActionBar().setTitle("MEUS UPLOADS");
+        getSupportActionBar().setTitle("MEUS PROJETOS");
 
         ref = FirebaseDatabase.getInstance().getReference().child("apk");
         mStorageRef = FirebaseStorage.getInstance().getReference();
@@ -121,9 +120,9 @@ public class VerMeusUploads extends AppCompatActivity {
 
                             for (DataSnapshot ds : dataSnapshot.getChildren()) {
                                 try{
-                                    firebaseID = ds.child("id").getValue().toString();
+                                    firebaseID = ds.child("userId").getValue().toString();
 
-                                    if(ds.child("id").getValue().toString().equals(Globais2.user_id)) {
+                                    if(firebaseID.equals(Globais2.user_id)) {
                                         list.add(ds.getValue(SoftUpload.class));
                                     }
                                 }catch (Exception e){
@@ -134,7 +133,7 @@ public class VerMeusUploads extends AppCompatActivity {
                             if (list.isEmpty()){
                                 Toast.makeText(VerMeusUploads.this, "NÃO DEU UPLOAD DE NENHUM FICHEIRO!!!!!", Toast.LENGTH_SHORT).show();
                             }else{
-                                SoftwareAdapter adapterClass = new SoftwareAdapter(VerMeusUploads.this, list);
+                                SoftwareAdapter adapterClass = new SoftwareAdapter(VerMeusUploads.this, "myShow", list);
                                 recyclerView.setAdapter(adapterClass);
                             }
                         }
@@ -165,11 +164,11 @@ public class VerMeusUploads extends AppCompatActivity {
             }
         }
 
-        SoftwareAdapter adapterClass = new SoftwareAdapter(VerMeusUploads.this, myList);
+        SoftwareAdapter adapterClass = new SoftwareAdapter(VerMeusUploads.this, "myShow", myList);
         recyclerView.setAdapter(adapterClass);
     }
 
-    public void downloadSoftware(View view) {
+    public void deleteSoftware(View view) {
         try{
             tvImageName = findViewById(R.id.show_card_holder_softName);
             btnDownload = findViewById(R.id.show_card_holder_btnDownload);
@@ -177,49 +176,67 @@ public class VerMeusUploads extends AppCompatActivity {
             RelativeLayout vwParentRow = (RelativeLayout)view.getParent();
             TextView child = (TextView)vwParentRow.getChildAt(0);
 
-            StorageReference riversRef = mStorageRef.child("apk/" + child.getText().toString() + ".apk");
-
-            File rootPath = new File(Environment.getExternalStorageDirectory(), "SOFTVIRTUAL");
-            final File myFile = new File(rootPath,  tvImageName.getText().toString()+ ".apk");
-
-            final ProgressDialog progressDialog = new ProgressDialog(VerMeusUploads.this);
+            getId(child.getText().toString());
 
             try{
-                if (!rootPath.exists()) {
-                    rootPath.mkdirs();
-                }
+                DatabaseReference delApk = FirebaseDatabase.getInstance().getReference("apk").child(apkId);
+                delApk.removeValue();
 
-                progressDialog.setTitle("Downloading...");
-                progressDialog.setCancelable(false);
-                progressDialog.show();
-
-                riversRef.getFile(myFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                        progressDialog.dismiss();
-
-
-                        myFile.delete();
-                    }
-
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception exception) {
-                        progressDialog.dismiss();
-                        Toast.makeText(VerMeusUploads.this, "Error", Toast.LENGTH_LONG).show();
-                    }
-                }).addOnProgressListener(new OnProgressListener<FileDownloadTask.TaskSnapshot>() {
-                    @Override
-                    public void onProgress(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                        double progress = (100.0 * taskSnapshot.getBytesTransferred())/taskSnapshot.getTotalByteCount();
-                        progressDialog.setMessage(((int)progress) + "% Downloaded...");
-                    }
-                });
-            }catch (Exception e1){
-                Toast.makeText(VerMeusUploads.this, e1.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "PROJETO ELIMINADO COM SUCESSO", Toast.LENGTH_SHORT).show();
+            }catch (Exception e) {
+                Toast.makeText(this, "ERRO AO ELIMINAR O PROJETO", Toast.LENGTH_SHORT).show();
             }
+
+
         } catch (Exception e1) {
             Toast.makeText(VerMeusUploads.this, e1.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+    private void getId(final String apkName) {
+
+        mDatabaseRef.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                try {
+                    SoftUpload apk = dataSnapshot.getValue(SoftUpload.class);
+
+                    if (apkName.equals(apk.getName())) {
+//                        Toast.makeText(VerMeusUploads.this, "APK ID: " + apk.getId(), Toast.LENGTH_SHORT).show();
+                        apkId = apk.getId();
+                    }
+
+                }catch (Exception e) {
+                    Toast.makeText(VerMeusUploads.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            System.out.println("Main thread Interrupted");
         }
     }
 

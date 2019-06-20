@@ -149,7 +149,7 @@ public class CreateUser2 extends AppCompatActivity {
             }
         }
         if (email.isEmpty() || pass.isEmpty() || passCheck.isEmpty()) {
-
+            Toast.makeText(mContext, "TEM DE PREENCHER TODOS OS CAMPOS", Toast.LENGTH_SHORT).show();
         }
     }
 

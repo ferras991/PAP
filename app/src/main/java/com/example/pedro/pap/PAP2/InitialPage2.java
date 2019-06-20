@@ -50,9 +50,8 @@ public class InitialPage2 extends AppCompatActivity {
 
     RecyclerView recyclerView;
     private ProgressBar progressBar;
-
     private Button btnDownload;
-    private TextView tvImageName;
+    private TextView tvImageName, softName;
 
     private Menu menu;
 
@@ -66,6 +65,7 @@ public class InitialPage2 extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.rv);
         progressBar = findViewById(R.id.initial_page_2_progress_bar);
+        softName = findViewById(R.id.show_card_holder_softName);
     }
 
     @Override
@@ -190,7 +190,7 @@ public class InitialPage2 extends AppCompatActivity {
                             }
 
                             Toast.makeText(InitialPage2.this, Globais2.apkNames.toString(), Toast.LENGTH_SHORT).show();
-                            SoftwareAdapter adapterClass = new SoftwareAdapter(InitialPage2.this, list);
+                            SoftwareAdapter adapterClass = new SoftwareAdapter(InitialPage2.this, "mainShow", list);
                             recyclerView.setAdapter(adapterClass);
                         }
 
@@ -222,7 +222,7 @@ public class InitialPage2 extends AppCompatActivity {
             }
         }
 
-        SoftwareAdapter adapterClass = new SoftwareAdapter(InitialPage2.this, myList);
+        SoftwareAdapter adapterClass = new SoftwareAdapter(InitialPage2.this, "mainShow", myList);
         recyclerView.setAdapter(adapterClass);
     }
 

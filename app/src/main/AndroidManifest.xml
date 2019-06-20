@@ -17,7 +17,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".PAP2.ResetPass"></activity>
+        <activity android:name=".PAP2.Change_Pass"></activity>
+        <activity android:name=".PAP2.ResetPass" />
         <activity
             android:name=".PAP2.MainPage2"
             android:screenOrientation="portrait"

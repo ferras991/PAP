@@ -27,21 +27,8 @@
             android:layout_marginTop="16dp"/>
 
         <Button
-            android:id="@+id/def_user_2_inserir"
-            android:layout_below="@+id/def_user_2_show_def"
-            android:text="Imagem e Nome"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="onClick"
-            android:background="@drawable/btn_rounded_border_enabled"
-            android:textColor="@android:color/white"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="12dp"/>
-
-        <Button
             android:id="@+id/def_user_2_inserir_soft"
-            android:layout_below="@+id/def_user_2_inserir"
+            android:layout_below="@+id/def_user_2_show_def"
             android:text="Inserir Software"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

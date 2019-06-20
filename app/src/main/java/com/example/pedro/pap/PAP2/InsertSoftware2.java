@@ -61,7 +61,7 @@ public class InsertSoftware2 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_insert_software2);
-        getSupportActionBar().setTitle("INSERIR SOFTWARE");
+        getSupportActionBar().setTitle("INSERIR PROJETO");
 
         mStorageRef = FirebaseStorage.getInstance().getReference();
         mDatabaseRef = FirebaseDatabase.getInstance().getReference(FB_DATABASE_PATH);
@@ -71,6 +71,13 @@ public class InsertSoftware2 extends AppCompatActivity {
         fileName = findViewById(R.id.insert_software_2_soft_name);
         softImage = findViewById(R.id.insert_software_2_soft_image);
         btnChoose = findViewById(R.id.insert_software_2_browseAPK);
+
+        Picasso.with(mContext)
+                .load(R.drawable.default_thumb)
+                .placeholder(R.mipmap.ic_launcher)
+                .resize(600, 600)
+                .centerCrop()
+                .into(softImage);
 
         buttonUpload.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -175,15 +182,15 @@ public class InsertSoftware2 extends AppCompatActivity {
                                                     @Override
                                                     public void onSuccess(Uri uri) {
                                                         caminho = uri.toString();
+                                                        String uploadId = mDatabaseRef.push().getKey();
 
-                                                        SoftUpload softUpload = new SoftUpload(Globais2.user_id,
+                                                        SoftUpload softUpload = new SoftUpload(uploadId,
                                                                 fileName.getText().toString().trim(),
                                                                 Globais2.user_name,
                                                                 Globais2.user_id,
                                                                 caminho,
                                                                 imageUrl);
 
-                                                        String uploadId = mDatabaseRef.push().getKey();
                                                         mDatabaseRef.child(uploadId).setValue(softUpload);
                                                     }
                                                 });

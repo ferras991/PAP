@@ -18,17 +18,30 @@ public class SoftwareAdapter extends RecyclerView.Adapter<SoftwareAdapter.MyView
 
     private Context mContext;
     ArrayList<SoftUpload> list;
+    String activity = "";
 
-    public SoftwareAdapter(Context context, ArrayList<SoftUpload> list) {
+    public SoftwareAdapter(Context context, String activity, ArrayList<SoftUpload> list) {
         mContext = context;
         this.list = list;
+
+        if (activity.equals("mainShow")) {
+            this.activity = "mainShow";
+        }else {
+            this.activity = "myShow";
+        }
     }
 
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+        if (activity.equals("myShow")) {
+            View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.show_my_soft_card_holder, viewGroup, false);
+            return new MyViewHolder(view);
+        }
+
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.show_soft_card_holder, viewGroup, false);
         return new MyViewHolder(view);
+
     }
 
     @Override
@@ -37,15 +50,13 @@ public class SoftwareAdapter extends RecyclerView.Adapter<SoftwareAdapter.MyView
         SoftUpload uploadCurrent = list.get(i);
         myViewHolder.softName.setText(uploadCurrent.getName());
         myViewHolder.userName.setText(uploadCurrent.getUserName());
-        //myViewHolder.imageShow.setText(uploadCurrent.getImageUrl());
+
         Picasso.with(mContext)
                 .load(uploadCurrent.getImageUrl())
                 .placeholder(R.mipmap.ic_launcher)
                 .resize(600, 600)
                 .centerCrop()
                 .into(myViewHolder.softImage);
-
-        // Toast.makeText(mContext, "ImageURl: " + uploadCurrent.getImageUrl(), Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -59,9 +70,17 @@ public class SoftwareAdapter extends RecyclerView.Adapter<SoftwareAdapter.MyView
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            softName = itemView.findViewById(R.id.show_card_holder_softName);
-            userName = itemView.findViewById(R.id.show_card_holder_softCreator);
-            softImage = itemView.findViewById(R.id.show_card_holder_softImg);
+            if (activity.equals("myShow")) {
+                softName = itemView.findViewById(R.id.show_my_card_holder_softName);
+                userName = itemView.findViewById(R.id.show_my_card_holder_softCreator);
+                softImage = itemView.findViewById(R.id.show_my_card_holder_softImg);
+            } else {
+                softName = itemView.findViewById(R.id.show_card_holder_softName);
+                userName = itemView.findViewById(R.id.show_card_holder_softCreator);
+                softImage = itemView.findViewById(R.id.show_card_holder_softImg);
+            }
+
+
         }
     }
 }

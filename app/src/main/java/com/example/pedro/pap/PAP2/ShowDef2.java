@@ -50,6 +50,13 @@ public class ShowDef2 extends AppCompatActivity {
         nameEdit = findViewById(R.id.name_edit_show_def);
         btnEditSave = findViewById(R.id.show_def_btn_save_changes);
 
+        Picasso.with(mContext)
+                .load(R.mipmap.ic_launcher)
+                .placeholder(R.mipmap.ic_launcher)
+                .resize(600, 600)
+                .centerCrop()
+                .into(userImageShow);
+
         showUserInfo();
     }
 
