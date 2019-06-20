@@ -77,6 +77,8 @@ public class InitialPage2 extends AppCompatActivity {
         searchView.setQueryHint("Pesquisar...");
         searchView.setMaxWidth(Integer.MAX_VALUE);
 
+        MenuItem menuItem = menu.findItem(R.id.action_search);
+
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
@@ -91,6 +93,23 @@ public class InitialPage2 extends AppCompatActivity {
                 return true;
             }
         });
+
+        menuItem.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
+            @Override
+            public boolean onMenuItemActionCollapse(MenuItem item) {
+                showOption(R.id.action_logout_btn);
+                showOption(R.id.action_settings_btn);
+                showOption(R.id.action_search);
+                return true;
+            }
+            @Override
+            public boolean onMenuItemActionExpand(MenuItem item) {
+                hideOption(R.id.action_logout_btn);
+                hideOption(R.id.action_settings_btn);
+                return true;
+            }
+        });
+
         return true;
     }
 
@@ -109,25 +128,21 @@ public class InitialPage2 extends AppCompatActivity {
                 break;
 
             case R.id.action_search:
-                hideOption(R.id.action_logout_btn, menu);
-                hideOption(R.id.action_settings_btn, menu);
                 break;
 
             default:
                 return false;
         }
-//        showOption(R.id.action_logout_btn, menu);
-//        showOption(R.id.action_settings_btn, menu);
         return true;
     }
 
-    private void hideOption(int id, Menu menu)
+    private void hideOption(int id)
     {
         MenuItem item = menu.findItem(id);
         item.setVisible(false);
     }
 
-    private void showOption(int id, Menu menu)
+    private void showOption(int id)
     {
         MenuItem item = menu.findItem(id);
         item.setVisible(true);
@@ -158,15 +173,23 @@ public class InitialPage2 extends AppCompatActivity {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     try {
-                        if(list != null) { list.clear(); }
+                        if(list != null) {
+                            list.clear();
+                        }
+
+                        if (Globais2.apkNames != null) {
+                            Globais2.apkNames.clear();
+                        }
 
                         if (dataSnapshot.exists()) {
                             list = new ArrayList<>();
 
                             for (DataSnapshot ds : dataSnapshot.getChildren()) {
                                 list.add(ds.getValue(SoftUpload.class));
+                                Globais2.apkNames.add(ds.getValue(SoftUpload.class).name);
                             }
 
+                            Toast.makeText(InitialPage2.this, Globais2.apkNames.toString(), Toast.LENGTH_SHORT).show();
                             SoftwareAdapter adapterClass = new SoftwareAdapter(InitialPage2.this, list);
                             recyclerView.setAdapter(adapterClass);
                         }

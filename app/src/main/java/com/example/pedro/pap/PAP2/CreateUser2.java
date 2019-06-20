@@ -180,6 +180,15 @@ public class CreateUser2 extends AppCompatActivity {
 
                                 Toast.makeText(getApplicationContext(), "Utilizador Criado", Toast.LENGTH_LONG).show();
 
+                                try {
+                                    Thread.sleep(300);
+                                } catch (InterruptedException e) {
+                                    System.out.println("Main thread Interrupted");
+                                }
+
+                                Globais2.user_name =  name;
+                                Globais2.user_img = url;
+
                                 //finish();
                             }
                         }).addOnFailureListener(new OnFailureListener() {

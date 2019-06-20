@@ -4,15 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center_horizontal"
     android:orientation="vertical"
-    android:layout_gravity="center"
     tools:context=".PAP2.InsertUserInfo2">
 
     <RelativeLayout
         android:layout_weight=".5"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center">
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
 
         <EditText
             android:id="@+id/insert_user_2_editText"
@@ -22,15 +23,19 @@
 
         <ImageView
             android:id="@+id/insert_user_2_imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/insert_user_2_editText"
+            android:layout_gravity="center"
             android:background="@drawable/logo_image"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:onClick="InsertImage"/>
+            android:onClick="InsertImage"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"/>
     </RelativeLayout>
 
     <RelativeLayout
-        android:layout_weight=".5"
+        android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

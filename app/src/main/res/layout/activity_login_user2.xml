@@ -109,6 +109,16 @@
             android:textSize="18sp"
             android:layout_below="@+id/login_user_2_email"/>
 
+        <TextView
+            android:id="@+id/login_user_2_pass_reset"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ESQUECEU-SE DA SENHA?"
+            android:padding="16dp"
+            android:textColor="@android:color/white"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/login_user_2_senha"
+            />
     </RelativeLayout>
 
     <RelativeLayout

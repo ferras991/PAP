@@ -10,11 +10,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.pedro.pap.Adapters.CreateUser2Upload;
 import com.example.pedro.pap.R;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -29,8 +31,9 @@ public class LoginUser2 extends AppCompatActivity {
     private DatabaseReference mDatabaseRef;
 
     private EditText emailField, passField;
-    private Button btnSubmit;
+    private Button btnLogin;
     private ProgressBar progressBar;
+    private TextView passReset;
 
     private String userID;
     @Override
@@ -40,13 +43,22 @@ public class LoginUser2 extends AppCompatActivity {
 
         emailField = findViewById(R.id.login_user_2_email);
         passField = findViewById(R.id.login_user_2_senha);
-        btnSubmit = findViewById(R.id.login_user_2_btn);
+        btnLogin = findViewById(R.id.login_user_2_btn);
         progressBar = findViewById(R.id.login_user_2_prog_bar);
+        passReset = findViewById(R.id.login_user_2_pass_reset);
 
         mAuth = FirebaseAuth.getInstance();
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("users");
 
-        btnSubmit.setOnClickListener(new View.OnClickListener() {
+        passReset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(LoginUser2.this, ResetPass.class);
+                startActivity(i);
+            }
+        });
+
+        btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 progressBar.setVisibility(View.VISIBLE);
@@ -62,14 +74,19 @@ public class LoginUser2 extends AppCompatActivity {
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful()) {
                                         userID = mAuth.getUid();
-                                        sendToSetup2();
+                                        sendToInitPage2();
                                     } else {
                                         String errorMessage = task.getException().getMessage();
                                         Toast.makeText(LoginUser2.this,"Error: " + errorMessage, Toast.LENGTH_LONG).show();
                                     }
 //                                    loginProgress.setVisibility(View.INVISIBLE);
                                 }
-                            });
+                            }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            progressBar.setVisibility(View.INVISIBLE);
+                        }
+                    });
                 }else{
                     Toast.makeText(LoginUser2.this,"Tem que preencher todos os campos", Toast.LENGTH_LONG).show();
                     progressBar.setVisibility(View.INVISIBLE);
@@ -78,7 +95,7 @@ public class LoginUser2 extends AppCompatActivity {
         });
     }
 
-    private void sendToSetup2() {
+    private void sendToInitPage2() {
         mDatabaseRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
@@ -89,6 +106,7 @@ public class LoginUser2 extends AppCompatActivity {
 
                     if (userID.equals(newUser.getId())) {
                         Globais2.user_id = userID;
+                        Globais2.user_email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
                         Globais2.user_name = newUser.getName();
                         Globais2.user_img = newUser.getImg();
                     }

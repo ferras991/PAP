@@ -25,7 +25,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class MainPage2 extends AppCompatActivity {
-
     private Button loginBtn;
     private Button regBtn;
 
@@ -53,12 +52,9 @@ public class MainPage2 extends AppCompatActivity {
             }
         }
 
-
         loginBtn = findViewById(R.id.main_page_2_login_btn);
         regBtn = findViewById(R.id.main_page_2_reg_btn);
-
     }
-
 
     @Override
     public void onStart() {
@@ -71,7 +67,6 @@ public class MainPage2 extends AppCompatActivity {
         }
     }
 
-
     private void sendToMain(){
         getNameAndImage();
 
@@ -80,15 +75,14 @@ public class MainPage2 extends AppCompatActivity {
         finish();
     }
 
-
     private void getNameAndImage() {
+
         mDatabaseRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 //                CreateUser2Upload newUser = dataSnapshot.getValue(CreateUser2Upload.class);
 
                 try {
-
                     CreateUser2Upload newUser = dataSnapshot.getValue(CreateUser2Upload.class);
 
 //                    Toast.makeText(LoginUser2.this, "UserID: " + userID, Toast.LENGTH_SHORT).show();
@@ -103,6 +97,7 @@ public class MainPage2 extends AppCompatActivity {
 //                        Toast.makeText(MainPage2.this, "Img: " + newUser.getImg(), Toast.LENGTH_SHORT).show();
 
                         Globais2.user_id = userID;
+                        Globais2.user_email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
                         Globais2.user_name = newUser.getName();
                         Globais2.user_img = newUser.getImg();
                     }

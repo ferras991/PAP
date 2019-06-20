@@ -1,5 +1,6 @@
 package com.example.pedro.pap.PAP2;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
@@ -23,6 +24,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
@@ -40,6 +42,8 @@ public class InsertUserInfo2 extends AppCompatActivity {
     private EditText userName;
     private ImageView userImage;
 
+    private Context mContext = this;
+
     public static final String FB_DATABASE_PATH = "users";
 
     @Override
@@ -52,6 +56,15 @@ public class InsertUserInfo2 extends AppCompatActivity {
 
         userName = findViewById(R.id.insert_user_2_editText);
         userImage = findViewById(R.id.insert_user_2_imageView);
+
+        Picasso.with(mContext)
+                .load(Globais2.user_img)
+                .placeholder(R.mipmap.ic_launcher)
+                .resize(1200, 1200)
+                .centerCrop()
+                .into(userImage);
+
+        Toast.makeText(mContext, "1", Toast.LENGTH_SHORT).show();
     }
 
     public void InsertImage(View view) {
@@ -70,7 +83,17 @@ public class InsertUserInfo2 extends AppCompatActivity {
 
             if (resultCode == RESULT_OK) {
                 mImageUri = result.getUri();
-                userImage.setImageURI(mImageUri);
+
+                Picasso.with(mContext)
+                        .load(mImageUri)
+                        .placeholder(R.mipmap.ic_launcher)
+                        .resize(1200, 1200)
+                        .centerCrop()
+                        .into(userImage);
+
+                Toast.makeText(mContext, "2", Toast.LENGTH_SHORT).show();
+
+//                userImage.setImageURI(mImageUri);
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 Exception error = result.getError();
                 Toast.makeText(this, error.toString(), Toast.LENGTH_SHORT).show();
@@ -127,41 +150,4 @@ public class InsertUserInfo2 extends AppCompatActivity {
         }
     }
 
-    private void storeFireStore(final String name, final StorageReference image_path) {
-        try {
-            if (image_path != null) {
-//                Toast.makeText(this, "entrou1", Toast.LENGTH_SHORT).show();
-                image_path.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                    @Override
-                    public void onSuccess(Uri uri) {
-                        final String caminho = uri.toString();
-
-//                        Toast.makeText(InsertUserInfo2.this, "entrou2", Toast.LENGTH_SHORT).show();
-
-                        Map<String, CreateUser2Upload> user = new HashMap<>();
-                        user.put(Globais2.user_id, new CreateUser2Upload(Globais2.user_id, name, caminho));
-
-
-                        mDatabaseRef.child("users").setValue(user);
-                        String uploadId = mDatabaseRef.push().getKey();
-                        mDatabaseRef.child(uploadId).setValue(user);
-
-                        Toast.makeText(InsertUserInfo2.this, "Já está", Toast.LENGTH_SHORT).show();
-
-                        Globais2.user_name = name;
-                        Globais2.user_img = caminho;
-
-//                        Toast.makeText(InsertUserInfo2.this, "Id: " + Globais2.user_id, Toast.LENGTH_SHORT).show();
-//                        Toast.makeText(InsertUserInfo2.this, "Name: " + Globais2.user_name, Toast.LENGTH_SHORT).show();
-//                        Toast.makeText(InsertUserInfo2.this, "Img: " + Globais2.user_img, Toast.LENGTH_SHORT).show();
-
-                    }
-                });
-            } else {
-                Toast.makeText(this, "NANA", Toast.LENGTH_SHORT).show();
-            }
-        }catch (Exception e) {
-            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
-        }
-    }
 }

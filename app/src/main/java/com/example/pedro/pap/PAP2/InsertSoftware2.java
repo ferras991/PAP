@@ -2,6 +2,7 @@ package com.example.pedro.pap.PAP2;
 
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
@@ -14,7 +15,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.pedro.pap.Adapters.SoftUpload;
 import com.example.pedro.pap.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -27,6 +27,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import org.apache.commons.io.FilenameUtils;
 
@@ -40,28 +41,27 @@ public class InsertSoftware2 extends AppCompatActivity {
     private StorageReference mStorageRef;
     private DatabaseReference mDatabaseRef;
 
-    private String user_id;
-
-    private String filePath;
-
     public static final String FB_STORAGE_PATH = "apk/";
     public static final String FB_DATABASE_PATH = "apk";
 
     private String extension;
     private String imageUrl;
+    private String caminho;
+    private String user_id;
+    private String filePath;
 
     private Uri softUri = null;
     private Uri mImageUri = null;
     private boolean imageChoose = false;
+    private Context mContext = this;
 
     private static final int PICK_IMAGE_REQUEST = 1;
-
-    String caminho;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_insert_software2);
+        getSupportActionBar().setTitle("INSERIR SOFTWARE");
 
         mStorageRef = FirebaseStorage.getInstance().getReference();
         mDatabaseRef = FirebaseDatabase.getInstance().getReference(FB_DATABASE_PATH);
@@ -76,8 +76,6 @@ public class InsertSoftware2 extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 extension = FilenameUtils.getExtension(textView.getText().toString());
-                Toast.makeText(InsertSoftware2.this, "Extensão: " + extension, Toast.LENGTH_LONG).show();
-                Toast.makeText(InsertSoftware2.this, filePath, Toast.LENGTH_LONG).show();
                 uploadFile();
             }
         });
@@ -115,111 +113,110 @@ public class InsertSoftware2 extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-//        Toast.makeText(this, "ImageChoose: " + imageChoose, Toast.LENGTH_SHORT).show();
-
         if(requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null && softImage != null && imageChoose == true) {
             mImageUri = data.getData();
-//            Toast.makeText(InsertSoftware2.this, "Image Path: " + mImageUri.getPath(), Toast.LENGTH_SHORT).show();
 
-            softImage.setImageURI(mImageUri);
-
-//            Toast.makeText(InsertSoftware2.this, "file Path: " + filePath, Toast.LENGTH_SHORT).show();
+            Picasso.with(mContext)
+                    .load(mImageUri)
+                    .placeholder(R.mipmap.ic_launcher)
+                    .resize(600, 600)
+                    .centerCrop()
+                    .into(softImage);
 
             imageChoose = false;
         }else if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
-//            Toast.makeText(this, "entrou soft 1", Toast.LENGTH_SHORT).show();
             softUri = data.getData();
 
             if (getAPKExt(softUri).equals("apk")) {
-//                Toast.makeText(this, "entrou soft 2", Toast.LENGTH_SHORT).show();
                 filePath = softUri.getPath();
-
-                //
-//                Toast.makeText(InsertSoftware2.this, filePath, Toast.LENGTH_LONG).show();
             }else {
-//                Toast.makeText(this, "entrou soft 3", Toast.LENGTH_SHORT).show();
-//                Toast.makeText(InsertSoftware2.this, getAPKExt(softUri), Toast.LENGTH_LONG).show();
+                Toast.makeText(InsertSoftware2.this, "INSIRA UM SOFTWARE", Toast.LENGTH_LONG).show();
             }
-
         }
-
-
     }
 
     private void uploadFile(){
-        if (mImageUri != null && softUri != null) {
-            final ProgressDialog dialog = new ProgressDialog(this);
-            dialog.setTitle("Uploading apk");
-            dialog.show();
+        boolean exist = false;
 
-            final StorageReference ref = mStorageRef.child("apkImages/" + fileName.getText().toString() + "." + getAPKExt(mImageUri));
-            final StorageReference ref2 = mStorageRef.child(FB_STORAGE_PATH + fileName.getText().toString() + "." + getAPKExt(softUri));
+        for (int i = 0; i < Globais2.apkNames.size(); i ++) {
+            if (fileName.getText().toString().equals(Globais2.apkNames.get(i))) {
+                exist = true;
+                Toast.makeText(mContext, "Existe", Toast.LENGTH_SHORT).show();
+                break;
+            }else {
+                Toast.makeText(mContext, "Não existe", Toast.LENGTH_SHORT).show();
+            }
+        }
 
-            ref.putFile(mImageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                    if(task.isSuccessful()){
-                        ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                            @Override
-                            public void onSuccess(Uri uri) {
-                                String url = String.valueOf(uri);
-                                //storeLink(url);
-                                imageUrl = url;
+        try {
+            if (mImageUri != null && softUri != null && exist == false) {
+                final ProgressDialog dialog = new ProgressDialog(this);
+                dialog.setTitle("UPLOADING DO SOFTWARE");
+                dialog.show();
 
-                                ref2.putFile(softUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                                        if(task.isSuccessful()){
-                                            ref2.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                                @Override
-                                                public void onSuccess(Uri uri) {
-                                                    caminho = uri.toString();
+                final StorageReference ref = mStorageRef.child("apkImages/" + fileName.getText().toString() + "." + getAPKExt(mImageUri));
+                final StorageReference ref2 = mStorageRef.child(FB_STORAGE_PATH + fileName.getText().toString() + "." + getAPKExt(softUri));
 
-//                                                    Toast.makeText(InsertSoftware2.this, "Id: " + Globais2.user_id, Toast.LENGTH_SHORT).show();
-//                                                    Toast.makeText(InsertSoftware2.this, "Name: " + fileName.getText().toString().trim(), Toast.LENGTH_SHORT).show();
-//                                                    Toast.makeText(InsertSoftware2.this, "Url: " + caminho, Toast.LENGTH_SHORT).show();
-//                                                    Toast.makeText(InsertSoftware2.this, "ImageUrl: " + imageUrl, Toast.LENGTH_SHORT).show();
+                ref.putFile(mImageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                        if(task.isSuccessful()){
+                            ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    String url = String.valueOf(uri);
+                                    imageUrl = url;
 
-                                                    SoftUpload softUpload = new SoftUpload(Globais2.user_id,
-                                                            fileName.getText().toString().trim(),
-                                                            Globais2.user_name,
-                                                            Globais2.user_id,
-                                                            caminho,
-                                                            imageUrl);
+                                    ref2.putFile(softUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                                            if(task.isSuccessful()){
+                                                ref2.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                                    @Override
+                                                    public void onSuccess(Uri uri) {
+                                                        caminho = uri.toString();
 
-                                                    String uploadId = mDatabaseRef.push().getKey();
-                                                    mDatabaseRef.child(uploadId).setValue(softUpload);
-                                                }
-                                            });
-                                            dialog.dismiss();
+                                                        SoftUpload softUpload = new SoftUpload(Globais2.user_id,
+                                                                fileName.getText().toString().trim(),
+                                                                Globais2.user_name,
+                                                                Globais2.user_id,
+                                                                caminho,
+                                                                imageUrl);
 
-                                            Toast.makeText(getApplicationContext(), "APK uploaded", Toast.LENGTH_LONG).show();
-
-                                            finish();
+                                                        String uploadId = mDatabaseRef.push().getKey();
+                                                        mDatabaseRef.child(uploadId).setValue(softUpload);
+                                                    }
+                                                });
+                                                dialog.dismiss();
+                                                Toast.makeText(getApplicationContext(), "UPLOAD DO SOFTWARE COM SUCESSO", Toast.LENGTH_LONG).show();
+                                                finish();
+                                            }
                                         }
-                                    }
-                                }).addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        dialog.dismiss();
-
-                                        Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
-                                    }
-                                }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                                    @Override
-                                    public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                                        double progress = (100 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
-                                        dialog.setMessage("Uploaded " + (int)progress + "%");
-                                        //Notifications.createNotification(mcontext, progress, "Uploading APK", txtImageName.getText().toString());
-                                    }
-                                });
-                            }
-                        });
+                                    }).addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            dialog.dismiss();
+                                            Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                                        }
+                                    }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                                        @Override
+                                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                                            double progress = (100 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
+                                            dialog.setMessage("Uploaded " + (int)progress + "%");
+                                        }
+                                    });
+                                }
+                            });
+                        }
                     }
-                }
-            });
-        }else{
-            Toast.makeText(getApplicationContext(), "SELECIONE UM FICHEIRO DO TIPO 'APK'", Toast.LENGTH_LONG).show();
+                });
+            }else if (exist == true){
+                Toast.makeText(mContext, "JÁ EXISTE UM PROJETO COM ESSE NOME!!", Toast.LENGTH_SHORT).show();
+            }else{
+                Toast.makeText(getApplicationContext(), "SELECIONE UM FICHEIRO DO TIPO 'APK'", Toast.LENGTH_LONG).show();
+            }
+        }catch (Exception e1) {
+
         }
     }
 

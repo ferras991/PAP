@@ -45,6 +45,7 @@ public class VerMeusUploads extends AppCompatActivity {
     private DatabaseReference ref;
     private StorageReference mStorageRef;
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    private String firebaseID;
 
     ArrayList<SoftUpload> list;
 
@@ -58,6 +59,7 @@ public class VerMeusUploads extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ver_meus_uploads);
+        getSupportActionBar().setTitle("MEUS UPLOADS");
 
         ref = FirebaseDatabase.getInstance().getReference().child("apk");
         mStorageRef = FirebaseStorage.getInstance().getReference();
@@ -95,7 +97,6 @@ public class VerMeusUploads extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()){
             case R.id.meus_uploads_search:
-//                return true;
                 break;
 
             default:
@@ -119,13 +120,24 @@ public class VerMeusUploads extends AppCompatActivity {
                             list = new ArrayList<>();
 
                             for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                                list.add(ds.getValue(SoftUpload.class));
+                                try{
+                                    firebaseID = ds.child("id").getValue().toString();
+
+                                    if(ds.child("id").getValue().toString().equals(Globais2.user_id)) {
+                                        list.add(ds.getValue(SoftUpload.class));
+                                    }
+                                }catch (Exception e){
+                                    Toast.makeText(VerMeusUploads.this, e.getMessage() , Toast.LENGTH_SHORT).show();
+                                }
                             }
 
-                            SoftwareAdapter adapterClass = new SoftwareAdapter(VerMeusUploads.this, list);
-                            recyclerView.setAdapter(adapterClass);
+                            if (list.isEmpty()){
+                                Toast.makeText(VerMeusUploads.this, "NÃO DEU UPLOAD DE NENHUM FICHEIRO!!!!!", Toast.LENGTH_SHORT).show();
+                            }else{
+                                SoftwareAdapter adapterClass = new SoftwareAdapter(VerMeusUploads.this, list);
+                                recyclerView.setAdapter(adapterClass);
+                            }
                         }
-
                         progressBar.setVisibility(View.INVISIBLE);
                     }catch (Exception e) {
                         Toast.makeText(VerMeusUploads.this, e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -185,7 +197,7 @@ public class VerMeusUploads extends AppCompatActivity {
                     @Override
                     public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
                         progressDialog.dismiss();
-                        install(myFile);
+
 
                         myFile.delete();
                     }
@@ -208,29 +220,6 @@ public class VerMeusUploads extends AppCompatActivity {
             }
         } catch (Exception e1) {
             Toast.makeText(VerMeusUploads.this, e1.getMessage(), Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    private void install(File myFile){
-        if(Build.VERSION.SDK_INT>=24){
-            try{
-                Method m = StrictMode.class.getMethod("disableDeathOnFileUriExposure");
-                m.invoke(null);
-            }catch(Exception e){
-                e.printStackTrace();
-            }
-        }
-
-        Intent intent;
-
-        try{
-            intent = new Intent(Intent.ACTION_INSTALL_PACKAGE);
-            intent.setData(Uri.fromFile(myFile));
-            startActivity(intent);
-
-            Thread.sleep(10000);
-        }catch (Exception e1){
-            Toast.makeText(VerMeusUploads.this, e1.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
 

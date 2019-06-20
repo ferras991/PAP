@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".PAP2.InsertSoftware2">
+    tools:context=".PAP2.InsertSoftware2"
+    android:background="#333333">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -20,7 +21,8 @@
             android:textColor="@android:color/white"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="12dp"/>
+            android:layout_marginBottom="12dp"
+            android:layout_marginTop="16dp"/>
 
         <EditText
             android:id="@+id/insert_software_2_soft_name"
