@@ -64,22 +64,27 @@ public class Change_Pass extends AppCompatActivity {
                                         }else {
                                             progressBar.setVisibility(View.INVISIBLE);
                                             Toast.makeText(Change_Pass.this, "SENHA MUDADA COM SUCESSO", Toast.LENGTH_SHORT).show();
+                                            finish();
                                         }
                                     }
                                 });
                             }else {
                                 Toast.makeText(Change_Pass.this, "VERIFIQUE A SENHA ATUAL", Toast.LENGTH_SHORT).show();
+                                progressBar.setVisibility(View.INVISIBLE);
                             }
                         }
                     });
                 }catch (Exception e) {
                     Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
+                    progressBar.setVisibility(View.INVISIBLE);
                 }
             } else {
                 Toast.makeText(this, "AS DUAS SENHAS NÃO CORRESPONDEM", Toast.LENGTH_SHORT).show();
+                progressBar.setVisibility(View.INVISIBLE);
             }
         } else {
             Toast.makeText(this, "TEM DE PREENCHER TODOS OS CAMPOS", Toast.LENGTH_SHORT).show();
+            progressBar.setVisibility(View.INVISIBLE);
         }
     }
 }

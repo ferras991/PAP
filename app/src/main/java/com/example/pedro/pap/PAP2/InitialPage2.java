@@ -136,14 +136,12 @@ public class InitialPage2 extends AppCompatActivity {
         return true;
     }
 
-    private void hideOption(int id)
-    {
+    private void hideOption(int id) {
         MenuItem item = menu.findItem(id);
         item.setVisible(false);
     }
 
-    private void showOption(int id)
-    {
+    private void showOption(int id) {
         MenuItem item = menu.findItem(id);
         item.setVisible(true);
     }
@@ -154,6 +152,11 @@ public class InitialPage2 extends AppCompatActivity {
     }
 
     private void sendToLogin() {
+        Globais2.user_id = "";
+        Globais2.user_name = "";
+        Globais2.user_img = "";
+        Globais2.user_email = "";
+        Globais2.apkNames.clear();
         Intent loginIntent = new Intent(InitialPage2.this, MainPage2.class);
         startActivity(loginIntent);
         finish();

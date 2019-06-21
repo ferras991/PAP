@@ -84,11 +84,13 @@ public class ShowDef2 extends AppCompatActivity {
             btnEditSave.setText("GUARDAR INFORMAÇÕES");
             emailEdit.setEnabled(true);
         } else if(btnText.equals("GUARDAR INFORMAÇÕES")) {
+            Toast.makeText(mContext, "Entra", Toast.LENGTH_SHORT).show();
             final String emailFiled = emailEdit.getText().toString();
 
             if (Globais2.user_email.equals(emailFiled)) {
                 emailEdit.setEnabled(false);
                 btnEditSave.setText("EDITAR INFORMAÇÕES");
+                Toast.makeText(mContext, "Entra2", Toast.LENGTH_SHORT).show();
             } else if (!Globais2.user_email.equals(emailFiled) && !emailFiled.isEmpty()){
                 FirebaseUser currentUser = mAuth.getCurrentUser();
                 currentUser.updateEmail(emailFiled).addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -96,11 +98,15 @@ public class ShowDef2 extends AppCompatActivity {
                     public void onSuccess(Void aVoid) {
                         Toast.makeText(mContext, "INFORMAÇÕES GUARDADAS COM SUCESSO", Toast.LENGTH_LONG).show();
                         Globais2.user_email = emailFiled;
+                        emailEdit.setEnabled(false);
+                        btnEditSave.setText("EDITAR INFORMAÇÕES");
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Toast.makeText(mContext, "ERRO GUARDAR INFORMAÇÕES", Toast.LENGTH_LONG).show();
+                        emailEdit.setEnabled(false);
+                        btnEditSave.setText("EDITAR INFORMAÇÕES");
                     }
                 });
             }
