@@ -1,5 +1,6 @@
 package com.example.pedro.pap.PAP2;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.MenuItemCompat;
@@ -8,16 +9,17 @@ import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.pedro.pap.CLASSES.Adapters.CreateProjectClass;
-import com.example.pedro.pap.CLASSES.Adapters.SoftwareAdapter;
+import com.example.pedro.pap.CLASSES.CreateProjectClass;
+import com.example.pedro.pap.Adapters.SoftwareAdapter;
+import com.example.pedro.pap.Comentarios.SeeProjectsComments;
 import com.example.pedro.pap.R;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -34,7 +36,6 @@ public class VerMeusUploads extends AppCompatActivity {
 
     private DatabaseReference mDatabaseRef = FirebaseDatabase.getInstance().getReference("apk");
     private DatabaseReference ref;
-    private StorageReference mStorageRef;
 
     private String firebaseID;
     private String apkId;
@@ -43,7 +44,6 @@ public class VerMeusUploads extends AppCompatActivity {
 
     RecyclerView recyclerView;
     private ProgressBar progressBar;
-    private Button btnDownload;
     private TextView tvImageName;
 
     @Override
@@ -53,7 +53,6 @@ public class VerMeusUploads extends AppCompatActivity {
         getSupportActionBar().setTitle("MEUS PROJETOS");
 
         ref = FirebaseDatabase.getInstance().getReference().child("apk");
-        mStorageRef = FirebaseStorage.getInstance().getReference();
 
         recyclerView = findViewById(R.id.ver_meus_uploads_rv);
         progressBar = findViewById(R.id.ver_meus_uploads_2_progress_bar);
@@ -64,7 +63,7 @@ public class VerMeusUploads extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.meus_uploads_menu, menu);
 
         final SearchView searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.meus_uploads_search));
-        searchView.setQueryHint("Pesquisar...");
+        searchView.setQueryHint("PESQUISAR...");
         searchView.setMaxWidth(Integer.MAX_VALUE);
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -163,7 +162,6 @@ public class VerMeusUploads extends AppCompatActivity {
     public void deleteSoftware(View view) {
         try{
             tvImageName = findViewById(R.id.show_card_holder_softName);
-            btnDownload = findViewById(R.id.show_card_holder_btnDownload);
 
             RelativeLayout vwParentRow = (RelativeLayout)view.getParent();
             TextView child = (TextView)vwParentRow.getChildAt(0);
@@ -185,7 +183,6 @@ public class VerMeusUploads extends AppCompatActivity {
         }
     }
 
-
     private void getId(final String apkName) {
 
         mDatabaseRef.addChildEventListener(new ChildEventListener() {
@@ -195,8 +192,7 @@ public class VerMeusUploads extends AppCompatActivity {
                     CreateProjectClass apk = dataSnapshot.getValue(CreateProjectClass.class);
 
                     if (apkName.equals(apk.getName())) {
-//                        Toast.makeText(VerMeusUploads.this, "APK ID: " + apk.getId(), Toast.LENGTH_SHORT).show();
-                        apkId = apk.getId();
+                        Globais2.apkId = apk.getId();
                     }
 
                 }catch (Exception e) {
@@ -229,6 +225,29 @@ public class VerMeusUploads extends AppCompatActivity {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
             System.out.println("Main thread Interrupted");
+        }
+    }
+
+    public void goToProjectComments(View view) {
+        try{
+            tvImageName = findViewById(R.id.show_card_holder_softName);
+
+            RelativeLayout vwParentRow = (RelativeLayout)view.getParent();
+            TextView child = (TextView)vwParentRow.getChildAt(0);
+
+            getId(child.getText().toString());
+
+            try{
+                Intent i = new Intent(VerMeusUploads.this, SeeProjectsComments.class);
+                startActivity(i);
+
+            }catch (Exception e) {
+                Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+
+
+        } catch (Exception e1) {
+            Toast.makeText(VerMeusUploads.this, e1.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
 

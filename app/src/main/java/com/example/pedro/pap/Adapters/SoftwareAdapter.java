@@ -1,20 +1,43 @@
-package com.example.pedro.pap.CLASSES.Adapters;
+package com.example.pedro.pap.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.pedro.pap.CLASSES.CreateProjectClass;
+import com.example.pedro.pap.Comentarios.SeeProjectsComments;
+import com.example.pedro.pap.PAP2.Globais2;
+import com.example.pedro.pap.PAP2.InitialPage2;
+import com.example.pedro.pap.PAP2.VerMeusUploads;
 import com.example.pedro.pap.R;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 public class SoftwareAdapter extends RecyclerView.Adapter<SoftwareAdapter.MyViewHolder> {
+
+    private DatabaseReference mDatabaseRef = FirebaseDatabase.getInstance().getReference("apk");
+
+    private String firebaseID;
+    private String apkId;
 
     private Context mContext;
     ArrayList<CreateProjectClass> list;
@@ -45,8 +68,7 @@ public class SoftwareAdapter extends RecyclerView.Adapter<SoftwareAdapter.MyView
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int i) {
-
+    public void onBindViewHolder(@NonNull final MyViewHolder myViewHolder, int i) {
         CreateProjectClass uploadCurrent = list.get(i);
         myViewHolder.softName.setText(uploadCurrent.getName());
         myViewHolder.userName.setText(uploadCurrent.getUserName());
@@ -67,6 +89,7 @@ public class SoftwareAdapter extends RecyclerView.Adapter<SoftwareAdapter.MyView
     class MyViewHolder extends RecyclerView.ViewHolder {
         TextView softName, userName;
         ImageView softImage;
+        TextView txtOptionDigit;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
 

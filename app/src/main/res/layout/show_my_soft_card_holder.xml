@@ -43,6 +43,16 @@
             android:layout_marginTop="10dp"
             android:onClick="deleteSoftware"/>
 
+        <Button
+            android:id="@+id/show_my_soft_card_holder_btnComments"
+            android:text="COMENTÁRIOS"
+            android:layout_below="@+id/show_my_card_holder_btnDownload"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:onClick="goToProjectComments"/>
+
         <ImageView
             android:id="@+id/show_my_card_holder_softImg"
             android:layout_width="match_parent"

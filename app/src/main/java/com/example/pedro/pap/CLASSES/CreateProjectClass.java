@@ -1,4 +1,4 @@
-package com.example.pedro.pap.CLASSES.Adapters;
+package com.example.pedro.pap.CLASSES;
 
 public class CreateProjectClass {
 

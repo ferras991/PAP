@@ -14,16 +14,18 @@ import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.PopupMenu;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.pedro.pap.CLASSES.Adapters.CreateProjectClass;
-import com.example.pedro.pap.CLASSES.Adapters.SoftwareAdapter;
+import com.example.pedro.pap.CLASSES.CreateProjectClass;
+import com.example.pedro.pap.Adapters.SoftwareAdapter;
 import com.example.pedro.pap.Comentarios.SeeProjectsComments;
 import com.example.pedro.pap.R;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -198,7 +200,7 @@ public class InitialPage2 extends AppCompatActivity {
                                 Globais2.apkNames.add(ds.getValue(CreateProjectClass.class).name);
                             }
 
-                            Toast.makeText(InitialPage2.this, Globais2.apkNames.toString(), Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(InitialPage2.this, Globais2.apkNames.toString(), Toast.LENGTH_SHORT).show();
                             SoftwareAdapter adapterClass = new SoftwareAdapter(InitialPage2.this, "mainShow", list);
                             recyclerView.setAdapter(adapterClass);
                         }
@@ -344,7 +346,6 @@ public class InitialPage2 extends AppCompatActivity {
                     CreateProjectClass apk = dataSnapshot.getValue(CreateProjectClass.class);
 
                     if (apkName.equals(apk.getName())) {
-//                        Toast.makeText(VerMeusUploads.this, "APK ID: " + apk.getId(), Toast.LENGTH_SHORT).show();
                         Globais2.apkId = apk.getId();
                     }
 

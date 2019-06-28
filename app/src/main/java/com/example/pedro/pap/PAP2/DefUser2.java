@@ -2,8 +2,6 @@ package com.example.pedro.pap.PAP2;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
-import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -15,9 +13,6 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.storage.FirebaseStorage;
-
-import java.io.File;
 
 public class DefUser2 extends AppCompatActivity {
 
@@ -66,7 +61,7 @@ public class DefUser2 extends AppCompatActivity {
     }
 
     private void goToChangePass() {
-        Intent i = new Intent(DefUser2.this, Change_Pass.class);
+        Intent i = new Intent(DefUser2.this, ChangePass.class);
         startActivity(i);
     }
 

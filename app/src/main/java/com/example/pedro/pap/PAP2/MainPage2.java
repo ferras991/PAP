@@ -17,7 +17,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.example.pedro.pap.CLASSES.Adapters.CreateUserClass;
+import com.example.pedro.pap.CLASSES.CreateUserClass;
 import com.example.pedro.pap.R;
 import com.example.pedro.pap.UpdateHelper;
 import com.google.firebase.auth.FirebaseAuth;
