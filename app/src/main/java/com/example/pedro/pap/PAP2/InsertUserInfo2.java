@@ -12,7 +12,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.pedro.pap.Adapters.CreateUser2Upload;
+import com.example.pedro.pap.CLASSES.Adapters.CreateUserClass;
 import com.example.pedro.pap.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -27,9 +27,6 @@ import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class InsertUserInfo2 extends AppCompatActivity {
 
@@ -126,7 +123,7 @@ public class InsertUserInfo2 extends AppCompatActivity {
                             public void onSuccess(Uri uri) {
                                 String url = String.valueOf(uri);
 
-                                CreateUser2Upload softUpload = new CreateUser2Upload(Globais2.user_id, userName.getText().toString(), url);
+                                CreateUserClass softUpload = new CreateUserClass(Globais2.user_id, userName.getText().toString(), url);
 
                                 Globais2.user_name =  userName.getText().toString();
                                 Globais2.user_img = url;

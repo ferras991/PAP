@@ -1,30 +1,20 @@
 package com.example.pedro.pap.PAP2;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.InputType;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
-import com.example.pedro.pap.Adapters.CreateUser2Upload;
 import com.example.pedro.pap.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.squareup.picasso.Picasso;
 
 public class ShowDef2 extends AppCompatActivity {
@@ -118,10 +108,10 @@ public class ShowDef2 extends AppCompatActivity {
 //        mDatabaseRef.addChildEventListener(new ChildEventListener() {
 //            @Override
 //            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-////                CreateUser2Upload newUser = dataSnapshot.getValue(CreateUser2Upload.class);
+////                CreateUserClass newUser = dataSnapshot.getValue(CreateUserClass.class);
 //
 //                try {
-//                    CreateUser2Upload newUser = dataSnapshot.getValue(CreateUser2Upload.class);
+//                    CreateUserClass newUser = dataSnapshot.getValue(CreateUserClass.class);
 //
 //                    if (userID.equals(newUser.getId())) {
 //                        Globais2.user_id = userID;

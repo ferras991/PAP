@@ -15,7 +15,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.example.pedro.pap.Adapters.SoftUpload;
+import com.example.pedro.pap.CLASSES.Adapters.CreateProjectClass;
 import com.example.pedro.pap.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -184,14 +184,14 @@ public class InsertSoftware2 extends AppCompatActivity {
                                                         caminho = uri.toString();
                                                         String uploadId = mDatabaseRef.push().getKey();
 
-                                                        SoftUpload softUpload = new SoftUpload(uploadId,
+                                                        CreateProjectClass createProjectClass = new CreateProjectClass(uploadId,
                                                                 fileName.getText().toString().trim(),
                                                                 Globais2.user_name,
                                                                 Globais2.user_id,
                                                                 caminho,
                                                                 imageUrl);
 
-                                                        mDatabaseRef.child(uploadId).setValue(softUpload);
+                                                        mDatabaseRef.child(uploadId).setValue(createProjectClass);
                                                     }
                                                 });
                                                 dialog.dismiss();

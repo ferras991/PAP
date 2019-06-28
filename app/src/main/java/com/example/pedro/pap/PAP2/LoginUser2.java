@@ -13,7 +13,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.pedro.pap.Adapters.CreateUser2Upload;
+import com.example.pedro.pap.CLASSES.Adapters.CreateUserClass;
 import com.example.pedro.pap.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -99,10 +99,10 @@ public class LoginUser2 extends AppCompatActivity {
         mDatabaseRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-//                CreateUser2Upload newUser = dataSnapshot.getValue(CreateUser2Upload.class);
+//                CreateUserClass newUser = dataSnapshot.getValue(CreateUserClass.class);
 
                 try {
-                    CreateUser2Upload newUser = dataSnapshot.getValue(CreateUser2Upload.class);
+                    CreateUserClass newUser = dataSnapshot.getValue(CreateUserClass.class);
 
                     if (userID.equals(newUser.getId())) {
                         Globais2.user_id = userID;

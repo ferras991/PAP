@@ -14,7 +14,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.example.pedro.pap.Adapters.CreateUser2Upload;
+import com.example.pedro.pap.CLASSES.Adapters.CreateUserClass;
 import com.example.pedro.pap.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -31,7 +31,7 @@ import com.google.firebase.storage.UploadTask;
 import java.io.File;
 import java.io.FileOutputStream;
 
-public class CreateUser2 extends AppCompatActivity {
+public class CreateUser extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private StorageReference mStorageRef;
@@ -132,7 +132,7 @@ public class CreateUser2 extends AppCompatActivity {
 
                                         progressBar.setVisibility(View.INVISIBLE);
 
-                                        Intent intent = new Intent(CreateUser2.this, InitialPage2.class);
+                                        Intent intent = new Intent(CreateUser.this, InitialPage2.class);
                                         startActivity(intent);
 
                                         finish();
@@ -171,7 +171,7 @@ public class CreateUser2 extends AppCompatActivity {
                             public void onSuccess(Uri uri) {
                                 String url = String.valueOf(uri);
 
-                                CreateUser2Upload softUpload = new CreateUser2Upload(Globais2.user_id, name, url);
+                                CreateUserClass softUpload = new CreateUserClass(Globais2.user_id, name, url);
 
                                 Globais2.user_name =  name;
                                 Globais2.user_img = url;
@@ -198,8 +198,8 @@ public class CreateUser2 extends AppCompatActivity {
                             }
                         });
                     }else {
-                        Toast.makeText(CreateUser2.this, "NANA", Toast.LENGTH_SHORT).show();
-                        Toast.makeText(CreateUser2.this, "Exception: " + task.getException(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(CreateUser.this, "NANA", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(CreateUser.this, "Exception: " + task.getException(), Toast.LENGTH_SHORT).show();
                     }
                 }
             });

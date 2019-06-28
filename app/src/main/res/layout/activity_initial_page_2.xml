@@ -8,11 +8,19 @@
     tools:context=".PAP2.InitialPage2"
     android:background="#333333">
 
+
    <ProgressBar
        android:id="@+id/initial_page_2_progress_bar"
+       style="?android:attr/progressBarStyleHorizontal"
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
-       android:indeterminate="true" />
+       android:indeterminate="true"
+       android:visibility="invisible"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toTopOf="parent"
+       android:theme="@style/AppTheme.ProgressBar"/>
+
 
 
    <android.support.v7.widget.RecyclerView

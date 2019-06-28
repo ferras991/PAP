@@ -7,6 +7,7 @@ import android.os.Build;
 import android.os.Environment;
 import android.os.StrictMode;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -21,12 +22,14 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.pedro.pap.Adapters.SoftUpload;
-import com.example.pedro.pap.Adapters.SoftwareAdapter;
+import com.example.pedro.pap.CLASSES.Adapters.CreateProjectClass;
+import com.example.pedro.pap.CLASSES.Adapters.SoftwareAdapter;
+import com.example.pedro.pap.Comentarios.SeeProjectsComments;
 import com.example.pedro.pap.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -42,11 +45,12 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 
 public class InitialPage2 extends AppCompatActivity {
+    private DatabaseReference mDatabaseRef = FirebaseDatabase.getInstance().getReference("apk");
     private DatabaseReference ref;
     private StorageReference mStorageRef;
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
-    ArrayList<SoftUpload> list;
+    ArrayList<CreateProjectClass> list;
 
     RecyclerView recyclerView;
     private ProgressBar progressBar;
@@ -54,6 +58,8 @@ public class InitialPage2 extends AppCompatActivity {
     private TextView tvImageName, softName;
 
     private Menu menu;
+    private String apkId;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -188,8 +194,8 @@ public class InitialPage2 extends AppCompatActivity {
                             list = new ArrayList<>();
 
                             for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                                list.add(ds.getValue(SoftUpload.class));
-                                Globais2.apkNames.add(ds.getValue(SoftUpload.class).name);
+                                list.add(ds.getValue(CreateProjectClass.class));
+                                Globais2.apkNames.add(ds.getValue(CreateProjectClass.class).name);
                             }
 
                             Toast.makeText(InitialPage2.this, Globais2.apkNames.toString(), Toast.LENGTH_SHORT).show();
@@ -217,9 +223,9 @@ public class InitialPage2 extends AppCompatActivity {
     }
 
     private void search(String str) {
-        ArrayList<SoftUpload> myList = new ArrayList<>();
+        ArrayList<CreateProjectClass> myList = new ArrayList<>();
 
-        for (SoftUpload object : list) {
+        for (CreateProjectClass object : list) {
             if(object.getName().toLowerCase().contains(str.toLowerCase())) {
                 myList.add(object);
             }
@@ -303,6 +309,75 @@ public class InitialPage2 extends AppCompatActivity {
             Thread.sleep(10000);
         }catch (Exception e1){
             Toast.makeText(InitialPage2.this, e1.getMessage(), Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public void goToProjectComments(View view) {
+        try{
+            tvImageName = findViewById(R.id.show_card_holder_softName);
+
+            RelativeLayout vwParentRow = (RelativeLayout)view.getParent();
+            TextView child = (TextView)vwParentRow.getChildAt(0);
+
+            getId(child.getText().toString());
+
+            try{
+                Intent i = new Intent(InitialPage2.this, SeeProjectsComments.class);
+                startActivity(i);
+
+            }catch (Exception e) {
+                Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+
+
+        } catch (Exception e1) {
+            Toast.makeText(InitialPage2.this, e1.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void getId(final String apkName) {
+
+        mDatabaseRef.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                try {
+                    CreateProjectClass apk = dataSnapshot.getValue(CreateProjectClass.class);
+
+                    if (apkName.equals(apk.getName())) {
+//                        Toast.makeText(VerMeusUploads.this, "APK ID: " + apk.getId(), Toast.LENGTH_SHORT).show();
+                        Globais2.apkId = apk.getId();
+                    }
+
+                }catch (Exception e) {
+                    Toast.makeText(InitialPage2.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            System.out.println("Main thread Interrupted");
         }
     }
 }

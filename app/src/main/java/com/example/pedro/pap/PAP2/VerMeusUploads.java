@@ -16,26 +16,18 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.pedro.pap.Adapters.CreateUser2Upload;
-import com.example.pedro.pap.Adapters.SoftUpload;
-import com.example.pedro.pap.Adapters.SoftwareAdapter;
+import com.example.pedro.pap.CLASSES.Adapters.CreateProjectClass;
+import com.example.pedro.pap.CLASSES.Adapters.SoftwareAdapter;
 import com.example.pedro.pap.R;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 
-import java.io.File;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 
 public class VerMeusUploads extends AppCompatActivity {
@@ -47,7 +39,7 @@ public class VerMeusUploads extends AppCompatActivity {
     private String firebaseID;
     private String apkId;
 
-    ArrayList<SoftUpload> list;
+    ArrayList<CreateProjectClass> list;
 
     RecyclerView recyclerView;
     private ProgressBar progressBar;
@@ -123,7 +115,7 @@ public class VerMeusUploads extends AppCompatActivity {
                                     firebaseID = ds.child("userId").getValue().toString();
 
                                     if(firebaseID.equals(Globais2.user_id)) {
-                                        list.add(ds.getValue(SoftUpload.class));
+                                        list.add(ds.getValue(CreateProjectClass.class));
                                     }
                                 }catch (Exception e){
                                     Toast.makeText(VerMeusUploads.this, e.getMessage() , Toast.LENGTH_SHORT).show();
@@ -156,9 +148,9 @@ public class VerMeusUploads extends AppCompatActivity {
     }
 
     private void search(String str) {
-        ArrayList<SoftUpload> myList = new ArrayList<>();
+        ArrayList<CreateProjectClass> myList = new ArrayList<>();
 
-        for (SoftUpload object : list) {
+        for (CreateProjectClass object : list) {
             if(object.getName().toLowerCase().contains(str.toLowerCase())) {
                 myList.add(object);
             }
@@ -200,7 +192,7 @@ public class VerMeusUploads extends AppCompatActivity {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 try {
-                    SoftUpload apk = dataSnapshot.getValue(SoftUpload.class);
+                    CreateProjectClass apk = dataSnapshot.getValue(CreateProjectClass.class);
 
                     if (apkName.equals(apk.getName())) {
 //                        Toast.makeText(VerMeusUploads.this, "APK ID: " + apk.getId(), Toast.LENGTH_SHORT).show();

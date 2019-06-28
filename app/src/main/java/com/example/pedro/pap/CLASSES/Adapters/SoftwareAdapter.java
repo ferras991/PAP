@@ -1,4 +1,4 @@
-package com.example.pedro.pap.Adapters;
+package com.example.pedro.pap.CLASSES.Adapters;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -17,10 +17,10 @@ import java.util.ArrayList;
 public class SoftwareAdapter extends RecyclerView.Adapter<SoftwareAdapter.MyViewHolder> {
 
     private Context mContext;
-    ArrayList<SoftUpload> list;
+    ArrayList<CreateProjectClass> list;
     String activity = "";
 
-    public SoftwareAdapter(Context context, String activity, ArrayList<SoftUpload> list) {
+    public SoftwareAdapter(Context context, String activity, ArrayList<CreateProjectClass> list) {
         mContext = context;
         this.list = list;
 
@@ -47,7 +47,7 @@ public class SoftwareAdapter extends RecyclerView.Adapter<SoftwareAdapter.MyView
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int i) {
 
-        SoftUpload uploadCurrent = list.get(i);
+        CreateProjectClass uploadCurrent = list.get(i);
         myViewHolder.softName.setText(uploadCurrent.getName());
         myViewHolder.userName.setText(uploadCurrent.getUserName());
 

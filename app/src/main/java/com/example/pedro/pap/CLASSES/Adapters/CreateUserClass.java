@@ -1,16 +1,16 @@
-package com.example.pedro.pap.Adapters;
+package com.example.pedro.pap.CLASSES.Adapters;
 
-public class CreateUser2Upload {
+public class CreateUserClass {
 
     private String id;
     private String name;
     private String img;
 
-    public CreateUser2Upload() {
+    public CreateUserClass() {
 
     }
 
-    public CreateUser2Upload(String id, String name, String img) {
+    public CreateUserClass(String id, String name, String img) {
         this.id = id;
         this.name = name;
         this.img = img;

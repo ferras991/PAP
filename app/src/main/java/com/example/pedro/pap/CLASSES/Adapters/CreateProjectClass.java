@@ -1,6 +1,6 @@
-package com.example.pedro.pap.Adapters;
+package com.example.pedro.pap.CLASSES.Adapters;
 
-public class SoftUpload {
+public class CreateProjectClass {
 
     public String id;
     public String name;
@@ -37,7 +37,7 @@ public class SoftUpload {
         this.imageUrl = imageUrl;
     }
 
-    public SoftUpload(String id, String name, String userName, String userId, String url, String imageUrl) {
+    public CreateProjectClass(String id, String name, String userName, String userId, String url, String imageUrl) {
         this.id = id;
         this.name = name;
         this.userName = userName;
@@ -46,7 +46,7 @@ public class SoftUpload {
         this.imageUrl = imageUrl;
     }
 
-    public SoftUpload(){
+    public CreateProjectClass(){
 
     }
 }

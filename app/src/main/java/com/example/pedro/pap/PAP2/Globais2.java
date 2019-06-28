@@ -12,4 +12,5 @@ public class Globais2 {
     public static String apk_link = "https://mega.nz/#!yUoQSIJI!raLy5XliHRO30mfkbVZ7SO_Bb3dFdLmoYKsao3trM2Y";
 
     public static ArrayList<String> apkNames = new ArrayList<>();
+    public static String apkId = "";
 }
